@@ -5,7 +5,7 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
     id: 'google',
     name: 'Google',
     icon: '🔍',
-    clientId: process.env.VITE_GOOGLE_CLIENT_ID || 'demo-google-client-id',
+    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID || 'demo-google-client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     scope: 'openid email profile'
   },
@@ -13,7 +13,7 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
     id: 'facebook',
     name: 'Facebook',
     icon: '📘',
-    clientId: process.env.VITE_FACEBOOK_CLIENT_ID || 'demo-facebook-client-id',
+    clientId: import.meta.env.VITE_FACEBOOK_CLIENT_ID || 'demo-facebook-client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     scope: 'email public_profile'
   },
@@ -21,7 +21,7 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
     id: 'twitch',
     name: 'Twitch',
     icon: '🎮',
-    clientId: process.env.VITE_TWITCH_CLIENT_ID || 'demo-twitch-client-id',
+    clientId: import.meta.env.VITE_TWITCH_CLIENT_ID || 'demo-twitch-client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     scope: 'openid user:read:email'
   },
@@ -29,7 +29,7 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
     id: 'apple',
     name: 'Apple',
     icon: '🍎',
-    clientId: process.env.VITE_APPLE_CLIENT_ID || 'demo-apple-client-id',
+    clientId: import.meta.env.VITE_APPLE_CLIENT_ID || 'demo-apple-client-id',
     redirectUri: `${window.location.origin}/auth/callback`,
     scope: 'name email'
   }

@@ -8,6 +8,7 @@ import OnChainRecords from './components/OnChainRecords'
 import DataVisualization from './components/DataVisualization'
 
 function App() {
+  console.log('App component is rendering!')
   const [activeTab, setActiveTab] = useState('dashboard')
 
   const renderContent = () => {

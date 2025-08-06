@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react'
-import { AuthState, User, AuthProvider } from '../types/auth'
+import React, { createContext, useContext, useReducer, useEffect, ReactNode, useCallback } from 'react'
+import { AuthState, User, AuthProvider as AuthProviderType } from '../types/auth'
 import { AUTH_PROVIDERS, SUI_CONFIG } from '../config/auth'
 
 interface AuthContextType extends AuthState {
-  login: (provider: AuthProvider['id']) => Promise<void>
+  login: (provider: AuthProviderType['id']) => Promise<void>
   logout: () => void
   handleAuthCallback: (code: string, state: string) => Promise<void>
 }
@@ -59,28 +59,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     error: null
   })
 
-  useEffect(() => {
-    // Check for existing session
-    const savedUser = localStorage.getItem('ecochain_user')
-    if (savedUser) {
-      try {
-        const user = JSON.parse(savedUser)
-        dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-      } catch (error) {
-        localStorage.removeItem('ecochain_user')
-      }
-    }
-
-    // Handle auth callback if present
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    const state_param = urlParams.get('state')
-    
-    if (code && state_param) {
-      handleAuthCallback(code, state_param)
-    }
-  }, [])
-
   const generateSuiAddress = (): string => {
     // Generate a realistic-looking Sui address
     const chars = '0123456789abcdef'
@@ -95,7 +73,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   }
 
-  const simulateZkLoginFlow = async (providerId: AuthProvider['id']): Promise<User> => {
+  const simulateZkLoginFlow = async (providerId: AuthProviderType['id']): Promise<User> => {
     // Simulate the zkLogin process with realistic timing
     await new Promise(resolve => setTimeout(resolve, 1500))
 
@@ -134,7 +112,58 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }
 
-  const login = async (providerId: AuthProvider['id']) => {
+  const handleAuthCallback = useCallback(async (code: string, state: string) => {
+    dispatch({ type: 'SET_LOADING', payload: true })
+    
+    try {
+      const stateData = JSON.parse(state)
+      const provider = AUTH_PROVIDERS.find(p => p.id === stateData.provider)
+      
+      if (!provider) {
+        throw new Error('Invalid provider')
+      }
+
+      // In a real implementation, you would:
+      // 1. Exchange code for JWT token with the provider
+      // 2. Verify the JWT and extract user info
+      // 3. Generate zkLogin proof using Sui's prover service
+      // 4. Create Sui address from the proof
+      
+      const user = await simulateZkLoginFlow(stateData.provider)
+      localStorage.setItem('ecochain_user', JSON.stringify(user))
+      dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+      
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname)
+      
+    } catch (error) {
+      dispatch({ type: 'LOGIN_ERROR', payload: error instanceof Error ? error.message : 'Authentication failed' })
+    }
+  }, [])
+
+  useEffect(() => {
+    // Check for existing session
+    const savedUser = localStorage.getItem('ecochain_user')
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser)
+        dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+      } catch (error) {
+        localStorage.removeItem('ecochain_user')
+      }
+    }
+
+    // Handle auth callback if present
+    const urlParams = new URLSearchParams(window.location.search)
+    const code = urlParams.get('code')
+    const state_param = urlParams.get('state')
+    
+    if (code && state_param) {
+      handleAuthCallback(code, state_param)
+    }
+  }, [handleAuthCallback])
+
+  const login = async (providerId: AuthProviderType['id']) => {
     dispatch({ type: 'LOGIN_START' })
     
     try {
@@ -211,34 +240,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }
 
-  const handleAuthCallback = async (code: string, state: string) => {
-    dispatch({ type: 'SET_LOADING', payload: true })
-    
-    try {
-      const stateData = JSON.parse(state)
-      const provider = AUTH_PROVIDERS.find(p => p.id === stateData.provider)
-      
-      if (!provider) {
-        throw new Error('Invalid provider')
-      }
 
-      // In a real implementation, you would:
-      // 1. Exchange code for JWT token with the provider
-      // 2. Verify the JWT and extract user info
-      // 3. Generate zkLogin proof using Sui's prover service
-      // 4. Create Sui address from the proof
-      
-      const user = await simulateZkLoginFlow(stateData.provider)
-      localStorage.setItem('ecochain_user', JSON.stringify(user))
-      dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-      
-      // Clean up URL
-      window.history.replaceState({}, document.title, window.location.pathname)
-      
-    } catch (error) {
-      dispatch({ type: 'LOGIN_ERROR', payload: error instanceof Error ? error.message : 'Authentication failed' })
-    }
-  }
 
   const logout = () => {
     localStorage.removeItem('ecochain_user')
