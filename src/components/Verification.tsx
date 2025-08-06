@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { Shield, CheckCircle, AlertTriangle, Clock, Key, Hash, FileCheck, Zap } from 'lucide-react'
+import { FaShieldAlt, FaCheckCircle, FaExclamationTriangle, FaClock, FaKey, FaHashtag, FaFileAlt, FaBolt } from 'react-icons/fa'
 
 const Verification: React.FC = () => {
   const [verificationStatus, setVerificationStatus] = useState<'idle' | 'verifying' | 'complete'>('idle')
   
   const verificationSteps = [
-    { id: 1, name: 'Data Integrity Check', status: 'complete', icon: FileCheck },
-    { id: 2, name: 'Digital Signature Verification', status: 'complete', icon: Key },
-    { id: 3, name: 'Hash Validation', status: 'verifying', icon: Hash },
-    { id: 4, name: 'Consensus Verification', status: 'pending', icon: Shield },
+    { id: 1, name: 'Data Integrity Check', status: 'complete', icon: FaFileAlt },
+    { id: 2, name: 'Digital Signature Verification', status: 'complete', icon: FaKey },
+    { id: 3, name: 'Hash Validation', status: 'verifying', icon: FaHashtag },
+    { id: 4, name: 'Consensus Verification', status: 'pending', icon: FaShieldAlt },
   ]
 
   const recentVerifications = [
@@ -65,7 +65,7 @@ const Verification: React.FC = () => {
             disabled={verificationStatus === 'verifying'}
             className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-400 to-blue-500 text-white rounded-lg hover:from-purple-500 hover:to-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50"
           >
-            <Shield className={`h-5 w-5 ${verificationStatus === 'verifying' ? 'animate-pulse' : ''}`} />
+            <FaShieldAlt className={`h-5 w-5 ${verificationStatus === 'verifying' ? 'animate-pulse' : ''}`} />
             <span>{verificationStatus === 'verifying' ? 'Verifying...' : 'Start Verification'}</span>
           </button>
         </div>
@@ -97,19 +97,19 @@ const Verification: React.FC = () => {
                   <div className="flex items-center space-x-2 mt-1">
                     {step.status === 'complete' && (
                       <>
-                        <CheckCircle className="h-4 w-4 text-green-500" />
+                        <FaCheckCircle className="h-4 w-4 text-green-500" />
                         <span className="text-sm text-green-600">Completed</span>
                       </>
                     )}
                     {step.status === 'verifying' && (
                       <>
-                        <Clock className="h-4 w-4 text-blue-500 animate-spin" />
+                        <FaClock className="h-4 w-4 text-blue-500 animate-spin" />
                         <span className="text-sm text-blue-600">In Progress</span>
                       </>
                     )}
                     {step.status === 'pending' && (
                       <>
-                        <Clock className="h-4 w-4 text-gray-500" />
+                        <FaClock className="h-4 w-4 text-gray-500" />
                         <span className="text-sm text-gray-500">Pending</span>
                       </>
                     )}
@@ -130,7 +130,7 @@ const Verification: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold text-gray-800">Recent Verifications</h3>
           <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Zap className="h-4 w-4" />
+            <FaBolt className="h-4 w-4" />
             <span>{recentVerifications.length} recent verifications</span>
           </div>
         </div>
@@ -146,9 +146,9 @@ const Verification: React.FC = () => {
                       : 'bg-yellow-500 shadow-lg'
                   }`}>
                     {verification.status === 'verified' ? (
-                      <CheckCircle className="h-4 w-4 text-white" />
+                      <FaCheckCircle className="h-4 w-4 text-white" />
                     ) : (
-                      <Clock className="h-4 w-4 text-white" />
+                      <FaClock className="h-4 w-4 text-white" />
                     )}
                   </div>
                   <div>
@@ -192,9 +192,9 @@ const Verification: React.FC = () => {
                       : 'bg-yellow-100/50 text-yellow-700 border border-yellow-200/50'
                   }`}>
                     {verification.status === 'verified' ? (
-                      <CheckCircle className="h-3 w-3" />
+                      <FaCheckCircle className="h-3 w-3" />
                     ) : (
-                      <AlertTriangle className="h-3 w-3" />
+                      <FaExclamationTriangle className="h-3 w-3" />
                     )}
                     <span>{verification.status}</span>
                   </div>
@@ -211,28 +211,28 @@ const Verification: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <Key className="h-8 w-8 text-white" />
+              <FaKey className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Digital Signatures</h4>
             <p className="text-sm text-gray-600">Cryptographic signatures ensure data authenticity and non-repudiation</p>
           </div>
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-green-400 to-blue-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <Hash className="h-8 w-8 text-white" />
+              <FaHashtag className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Hash Validation</h4>
             <p className="text-sm text-gray-600">SHA-256 hashing provides tamper-evident data integrity verification</p>
           </div>
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <Shield className="h-8 w-8 text-white" />
+              <FaShieldAlt className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Consensus Mechanism</h4>
             <p className="text-sm text-gray-600">Multi-node consensus ensures distributed verification reliability</p>
           </div>
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-orange-400 to-red-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <FileCheck className="h-8 w-8 text-white" />
+              <FaFileAlt className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Data Integrity</h4>
             <p className="text-sm text-gray-600">Comprehensive validation of data format, range, and consistency</p>

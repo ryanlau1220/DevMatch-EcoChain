@@ -1,5 +1,5 @@
 import React from 'react'
-import { X, Shield, Zap, Info } from 'lucide-react'
+import { FaTimes, FaShieldAlt, FaBolt, FaInfoCircle } from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 import { AUTH_PROVIDERS } from '../config/auth'
 
@@ -30,13 +30,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           onClick={onClose}
           className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors"
         >
-          <X className="h-5 w-5 text-gray-600" />
+          <FaTimes className="h-5 w-5 text-gray-600" />
         </button>
 
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <div className="p-3 rounded-xl bg-gradient-to-r from-green-400 to-blue-500 shadow-lg">
-              <Shield className="h-8 w-8 text-white" />
+              <FaShieldAlt className="h-8 w-8 text-white" />
             </div>
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Secure Login</h2>
@@ -51,7 +51,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
         <div className="mb-6 p-4 rounded-lg bg-blue-100/50 border border-blue-200/50">
           <div className="flex items-start space-x-3">
-            <Info className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <FaInfoCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm">
               <p className="font-medium text-blue-800 mb-1">Demo Mode</p>
               <p className="text-blue-700">This is a demonstration of Sui zkLogin. In production, you would configure real OAuth client IDs in your .env file.</p>
@@ -77,7 +77,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
         <div className="backdrop-blur-sm bg-blue-50/30 rounded-lg p-4 border border-blue-200/30">
           <div className="flex items-start space-x-3">
-            <Zap className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <FaBolt className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm">
               <p className="font-medium text-blue-800 mb-1">Powered by Sui zkLogin</p>
               <p className="text-blue-700">Zero-knowledge proofs ensure your privacy while providing secure authentication without exposing personal data.</p>

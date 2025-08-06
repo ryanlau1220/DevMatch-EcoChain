@@ -30,12 +30,12 @@ function App() {
 
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 font-inter">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center opacity-5"></div>
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 font-inter relative">
+        <div className="fixed inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center opacity-10"></div>
         
-        <div className="relative z-10">
+        <div className="relative z-10 min-h-screen">
           <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto px-4 py-8 pb-16">
             {renderContent()}
           </main>
         </div>

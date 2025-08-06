@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { Thermometer, Droplets, Wind, Leaf, MapPin, Calendar, Zap, RefreshCw } from 'lucide-react'
+import { FaThermometerHalf, FaTint, FaWind, FaLeaf, FaMapMarkerAlt, FaCalendarAlt, FaBolt, FaRedo } from 'react-icons/fa'
 
 const DataGeneration: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedData, setGeneratedData] = useState<any[]>([])
 
   const sensorTypes = [
-    { id: 'temperature', name: 'Temperature', icon: Thermometer, unit: '°C', range: [15, 35] },
-    { id: 'humidity', name: 'Humidity', icon: Droplets, unit: '%', range: [30, 90] },
-    { id: 'airQuality', name: 'Air Quality', icon: Wind, unit: 'AQI', range: [20, 150] },
-    { id: 'co2', name: 'CO2 Levels', icon: Leaf, unit: 'ppm', range: [350, 450] },
+    { id: 'temperature', name: 'Temperature', icon: FaThermometerHalf, unit: '°C', range: [15, 35] },
+    { id: 'humidity', name: 'Humidity', icon: FaTint, unit: '%', range: [30, 90] },
+    { id: 'airQuality', name: 'Air Quality', icon: FaWind, unit: 'AQI', range: [20, 150] },
+    { id: 'co2', name: 'CO2 Levels', icon: FaLeaf, unit: 'ppm', range: [350, 450] },
   ]
 
   const locations = [
@@ -56,7 +56,7 @@ const DataGeneration: React.FC = () => {
             disabled={isGenerating}
             className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50"
           >
-            <RefreshCw className={`h-5 w-5 ${isGenerating ? 'animate-spin' : ''}`} />
+            <FaRedo className={`h-5 w-5 ${isGenerating ? 'animate-spin' : ''}`} />
             <span>{isGenerating ? 'Generating...' : 'Generate Data'}</span>
           </button>
         </div>
@@ -98,7 +98,7 @@ const DataGeneration: React.FC = () => {
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-semibold text-gray-800">Generated Environmental Data</h3>
             <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Zap className="h-4 w-4" />
+              <FaBolt className="h-4 w-4" />
               <span>{generatedData.length} data points</span>
             </div>
           </div>
@@ -116,7 +116,7 @@ const DataGeneration: React.FC = () => {
                       <div>
                         <p className="font-medium text-gray-800">{data.type}</p>
                         <p className="text-sm text-gray-600 flex items-center">
-                          <MapPin className="h-3 w-3 mr-1" />
+                          <FaMapMarkerAlt className="h-3 w-3 mr-1" />
                           {data.location}
                         </p>
                       </div>
@@ -136,7 +136,7 @@ const DataGeneration: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-gray-500 flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
+                        <FaCalendarAlt className="h-3 w-3 mr-1" />
                         {data.timestamp}
                       </p>
                     </div>
@@ -154,21 +154,21 @@ const DataGeneration: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <Zap className="h-8 w-8 text-white" />
+              <FaBolt className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Sensor Simulation</h4>
             <p className="text-sm text-gray-600">Realistic environmental data generation based on sensor specifications</p>
           </div>
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-green-400 to-blue-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <MapPin className="h-8 w-8 text-white" />
+              <FaMapMarkerAlt className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Location Mapping</h4>
             <p className="text-sm text-gray-600">Geographic distribution across multiple monitoring stations</p>
           </div>
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <Calendar className="h-8 w-8 text-white" />
+              <FaCalendarAlt className="h-8 w-8 text-white" />
             </div>
             <h4 className="font-medium text-gray-800 mb-2">Timestamping</h4>
             <p className="text-sm text-gray-600">Precise temporal data for chronological analysis and verification</p>

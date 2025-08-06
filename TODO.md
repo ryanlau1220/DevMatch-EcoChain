@@ -52,6 +52,23 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - OAuth2 provider support
   - Session management
   - Demo mode functionality
+- [x] **Icon Library Management**:
+  - Replaced lucide-react with React Icons (FontAwesome)
+  - Fixed ad blocker compatibility issues
+  - Updated all components with consistent iconography
+- [x] **Real-Time Dashboard with Data Visualization**:
+  - Real-time simulated data generation (updates every 30s)
+  - Beautiful charts with Recharts library
+  - Air Quality Trends (24h line chart)
+  - Temperature & Humidity (7d area chart)
+  - Water Quality Parameters (12h bar chart)
+  - Sensor Distribution (pie chart)
+  - Interactive tooltips and responsive design
+- [x] **UI/UX Improvements**:
+  - Fixed background image coverage for all pages
+  - Corrected temperature chart colors (orange instead of green)
+  - Enhanced glassmorphism styling
+  - Improved responsive layout
 
 ## 🔄 IN PROGRESS
 

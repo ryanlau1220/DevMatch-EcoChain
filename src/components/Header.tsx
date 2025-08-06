@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
-import { Leaf, Database, Shield, BarChart3, FileCheck, Zap, User, Menu, X } from 'lucide-react'
+import { 
+  FaLeaf, 
+  FaDatabase, 
+  FaShieldAlt, 
+  FaChartBar, 
+  FaFileAlt, 
+  FaBolt, 
+  FaUser, 
+  FaBars, 
+  FaTimes 
+} from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 import LoginModal from './LoginModal'
 import UserProfile from './UserProfile'
@@ -15,11 +25,11 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { id: 'generation', label: 'Data Generation', icon: Zap },
-    { id: 'verification', label: 'Verification', icon: Shield },
-    { id: 'records', label: 'On-Chain Records', icon: Database },
-    { id: 'visualization', label: 'Visualization', icon: FileCheck },
+    { id: 'dashboard', label: 'Dashboard', icon: FaChartBar },
+    { id: 'generation', label: 'Data Generation', icon: FaBolt },
+    { id: 'verification', label: 'Verification', icon: FaShieldAlt },
+    { id: 'records', label: 'On-Chain Records', icon: FaDatabase },
+    { id: 'visualization', label: 'Visualization', icon: FaFileAlt },
   ]
 
   const handleNavClick = (tabId: string) => {
@@ -35,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3 flex-shrink-0">
               <div className="p-2 rounded-xl bg-gradient-to-r from-green-400 to-blue-500 shadow-lg">
-                <Leaf className="h-6 w-6 text-white" />
+                <FaLeaf className="h-6 w-6 text-white" />
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-xl font-bold text-gray-800">EcoChain</h1>
@@ -82,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   onClick={() => setShowLoginModal(true)}
                   className="flex items-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-200"
                 >
-                  <User className="h-4 w-4" />
+                  <FaUser className="h-4 w-4" />
                   <span className="text-sm font-medium hidden sm:inline">Login</span>
                 </button>
               )}
@@ -93,9 +103,9 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 className="lg:hidden p-2 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-200"
               >
                 {isMobileMenuOpen ? (
-                  <X className="h-5 w-5 text-gray-700" />
+                  <FaTimes className="h-5 w-5 text-gray-700" />
                 ) : (
-                  <Menu className="h-5 w-5 text-gray-700" />
+                  <FaBars className="h-5 w-5 text-gray-700" />
                 )}
               </button>
             </div>

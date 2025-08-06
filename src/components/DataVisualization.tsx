@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BarChart3, TrendingUp, MapPin, Calendar, Filter, Download, RefreshCw } from 'lucide-react'
+import { FaChartBar, FaArrowUp, FaMapMarkerAlt, FaCalendarAlt, FaFilter, FaDownload, FaRedo } from 'react-icons/fa'
 
 const DataVisualization: React.FC = () => {
   const [selectedMetric, setSelectedMetric] = useState('airQuality')
@@ -86,11 +86,11 @@ const DataVisualization: React.FC = () => {
           </div>
           <div className="flex items-center space-x-3">
             <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-200">
-              <Download className="h-4 w-4 text-gray-600" />
+              <FaDownload className="h-4 w-4 text-gray-600" />
               <span className="text-sm text-gray-600">Export</span>
             </button>
             <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-lg hover:from-blue-500 hover:to-purple-600 transition-all duration-200 shadow-lg">
-              <RefreshCw className="h-4 w-4" />
+              <FaRedo className="h-4 w-4" />
               <span className="text-sm">Refresh</span>
             </button>
           </div>
@@ -101,7 +101,7 @@ const DataVisualization: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-4 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-2 mb-3">
-            <Filter className="h-4 w-4 text-gray-600" />
+            <FaFilter className="h-4 w-4 text-gray-600" />
             <span className="text-sm font-medium text-gray-700">Metric</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -123,7 +123,7 @@ const DataVisualization: React.FC = () => {
 
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-4 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-2 mb-3">
-            <Calendar className="h-4 w-4 text-gray-600" />
+            <FaCalendarAlt className="h-4 w-4 text-gray-600" />
             <span className="text-sm font-medium text-gray-700">Time Range</span>
           </div>
           <div className="grid grid-cols-4 gap-2">
@@ -157,7 +157,7 @@ const DataVisualization: React.FC = () => {
                 {currentData[currentData.length - 1]?.value} {currentMetric?.unit}
               </p>
               <div className="flex items-center space-x-1 text-sm text-green-600">
-                <TrendingUp className="h-4 w-4" />
+                <FaArrowUp className="h-4 w-4" />
                 <span>+2.3% from yesterday</span>
               </div>
             </div>
@@ -186,7 +186,7 @@ const DataVisualization: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold text-gray-800">Regional Data Overview</h3>
           <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <MapPin className="h-4 w-4" />
+            <FaMapMarkerAlt className="h-4 w-4" />
             <span>6 monitoring stations</span>
           </div>
         </div>
@@ -196,7 +196,7 @@ const DataVisualization: React.FC = () => {
             <div key={index} className="backdrop-blur-sm bg-white/5 rounded-lg p-4 border border-white/10">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4 text-gray-600" />
+                  <FaMapMarkerAlt className="h-4 w-4 text-gray-600" />
                   <span className="font-medium text-gray-800">{location.city}</span>
                 </div>
                 <div className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(location.status)}`}>
@@ -225,7 +225,7 @@ const DataVisualization: React.FC = () => {
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-3 rounded-lg bg-gradient-to-r from-blue-400 to-purple-500 shadow-lg">
-              <BarChart3 className="h-6 w-6 text-white" />
+              <FaChartBar className="h-6 w-6 text-white" />
             </div>
             <div>
               <p className="font-semibold text-gray-800">Average</p>
@@ -240,7 +240,7 @@ const DataVisualization: React.FC = () => {
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-3 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 shadow-lg">
-              <TrendingUp className="h-6 w-6 text-white" />
+              <FaArrowUp className="h-6 w-6 text-white" />
             </div>
             <div>
               <p className="font-semibold text-gray-800">Peak</p>
@@ -255,7 +255,7 @@ const DataVisualization: React.FC = () => {
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-3 rounded-lg bg-gradient-to-r from-purple-400 to-pink-500 shadow-lg">
-              <BarChart3 className="h-6 w-6 text-white" />
+              <FaChartBar className="h-6 w-6 text-white" />
             </div>
             <div>
               <p className="font-semibold text-gray-800">Minimum</p>
@@ -270,7 +270,7 @@ const DataVisualization: React.FC = () => {
         <div className="backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-3 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 shadow-lg">
-              <TrendingUp className="h-6 w-6 text-white" />
+              <FaArrowUp className="h-6 w-6 text-white" />
             </div>
             <div>
               <p className="font-semibold text-gray-800">Variance</p>

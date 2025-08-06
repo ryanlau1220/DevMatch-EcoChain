@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { LogOut, User, Copy, ExternalLink, ChevronDown } from 'lucide-react'
+import { FaSignOutAlt, FaUser, FaCopy, FaExternalLinkAlt, FaChevronDown } from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 
 const UserProfile: React.FC = () => {
@@ -48,7 +48,7 @@ const UserProfile: React.FC = () => {
           <p className="text-sm font-medium text-gray-800 truncate max-w-24">{user.name}</p>
           <p className="text-xs text-gray-600">{user.provider}</p>
         </div>
-        <ChevronDown className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <FaChevronDown className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
@@ -85,14 +85,14 @@ const UserProfile: React.FC = () => {
                     className="p-1 rounded hover:bg-white/20 transition-colors"
                     title="Copy address"
                   >
-                    <Copy className="h-3 w-3 text-gray-600" />
+                    <FaCopy className="h-3 w-3 text-gray-600" />
                   </button>
                   <button
                     onClick={() => window.open(`https://suiexplorer.com/address/${user.suiAddress}`, '_blank')}
                     className="p-1 rounded hover:bg-white/20 transition-colors"
                     title="View on Sui Explorer"
                   >
-                    <ExternalLink className="h-3 w-3 text-gray-600" />
+                    <FaExternalLinkAlt className="h-3 w-3 text-gray-600" />
                   </button>
                 </div>
               </div>
@@ -113,7 +113,7 @@ const UserProfile: React.FC = () => {
                 }}
                 className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-left"
               >
-                <User className="h-4 w-4 text-gray-600" />
+                <FaUser className="h-4 w-4 text-gray-600" />
                 <span className="text-sm text-gray-700">Manage Profile</span>
               </button>
               
@@ -124,7 +124,7 @@ const UserProfile: React.FC = () => {
                 }}
                 className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-red-100/20 transition-colors text-left text-red-600"
               >
-                <LogOut className="h-4 w-4" />
+                <FaSignOutAlt className="h-4 w-4" />
                 <span className="text-sm">Sign Out</span>
               </button>
             </div>
