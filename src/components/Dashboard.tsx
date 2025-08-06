@@ -14,6 +14,7 @@ import {
   FaMapMarkerAlt,
   FaClock
 } from 'react-icons/fa'
+
 import { 
   LineChart, 
   Line, 
@@ -31,12 +32,14 @@ import {
   Pie,
   Cell
 } from 'recharts'
+import { LoadingSpinner, SkeletonCard, SkeletonChart } from './LoadingSpinner'
 
 const Dashboard: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [airQualityData, setAirQualityData] = useState<any[]>([])
   const [temperatureData, setTemperatureData] = useState<any[]>([])
   const [waterQualityData, setWaterQualityData] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   // Generate real-time simulated data
   const generateSimulatedData = () => {
@@ -85,7 +88,15 @@ const Dashboard: React.FC = () => {
 
   // Update data every 30 seconds
   useEffect(() => {
-    generateSimulatedData()
+    const loadData = async () => {
+      setIsLoading(true)
+      // Simulate loading delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      generateSimulatedData()
+      setIsLoading(false)
+    }
+
+    loadData()
     const interval = setInterval(() => {
       setCurrentTime(new Date())
       generateSimulatedData()
@@ -216,7 +227,14 @@ const Dashboard: React.FC = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
+        {isLoading ? (
+          // Show skeleton cards while loading
+          Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+        ) : (
+          // Show actual stats when loaded
+          stats.map((stat, index) => {
           const Icon = stat.icon
           return (
             <div key={index} className="backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -224,9 +242,9 @@ const Dashboard: React.FC = () => {
                 <div className={`p-3 rounded-lg bg-gradient-to-r ${stat.color} shadow-lg`}>
                   <Icon className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-right">
-                  <span className="text-green-500 text-sm font-medium">{stat.change}</span>
-                </div>
+                  <div className="text-right">
+                    <span className="text-green-500 text-sm font-medium">{stat.change}</span>
+                  </div>
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
@@ -234,7 +252,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           )
-        })}
+          })
+        )}
       </div>
 
       {/* Charts Section */}
@@ -242,130 +261,156 @@ const Dashboard: React.FC = () => {
         {/* Air Quality Chart */}
         <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
           <h3 className="text-xl font-semibold text-gray-800 mb-6">Air Quality Trends (24h)</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={airQualityData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
-              <YAxis stroke="#6b7280" fontSize={12} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px'
-                }}
-              />
-              <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="aqi" 
-                stroke="#3B82F6" 
-                strokeWidth={3}
-                dot={{ fill: '#3B82F6', strokeWidth: 2, r: 4 }}
-                name="AQI"
-              />
-              <Line 
-                type="monotone" 
-                dataKey="pm25" 
-                stroke="#10B981" 
-                strokeWidth={3}
-                dot={{ fill: '#10B981', strokeWidth: 2, r: 4 }}
-                name="PM2.5"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-64">
+              <LoadingSpinner size="lg" text="Loading air quality data..." />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={airQualityData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
+                <YAxis stroke="#6b7280" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px'
+                  }}
+                />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="aqi" 
+                  stroke="#3B82F6" 
+                  strokeWidth={3}
+                  dot={{ fill: '#3B82F6', strokeWidth: 2, r: 4 }}
+                  name="AQI"
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="pm25" 
+                  stroke="#10B981" 
+                  strokeWidth={3}
+                  dot={{ fill: '#10B981', strokeWidth: 2, r: 4 }}
+                  name="PM2.5"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Temperature Chart */}
         <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
           <h3 className="text-xl font-semibold text-gray-800 mb-6">Temperature & Humidity (7d)</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={temperatureData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-              <YAxis yAxisId="left" stroke="#F97316" fontSize={12} />
-              <YAxis yAxisId="right" orientation="right" stroke="#06B6D4" fontSize={12} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px'
-                }}
-              />
-              <Legend />
-              <Line 
-                yAxisId="left"
-                type="monotone" 
-                dataKey="temp" 
-                stroke="#F97316" 
-                strokeWidth={3}
-                dot={{ fill: '#F97316', strokeWidth: 2, r: 4 }}
-                name="Temperature (°C)"
-              />
-              <Line 
-                yAxisId="right"
-                type="monotone" 
-                dataKey="humidity" 
-                stroke="#06B6D4" 
-                strokeWidth={3}
-                dot={{ fill: '#06B6D4', strokeWidth: 2, r: 4 }}
-                name="Humidity (%)"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-64">
+              <LoadingSpinner size="lg" text="Loading temperature data..." />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={temperatureData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
+                <YAxis yAxisId="left" stroke="#F97316" fontSize={12} />
+                <YAxis yAxisId="right" orientation="right" stroke="#06B6D4" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px'
+                  }}
+                />
+                <Legend />
+                <Line 
+                  yAxisId="left"
+                  type="monotone" 
+                  dataKey="temp" 
+                  stroke="#F97316" 
+                  strokeWidth={3}
+                  dot={{ fill: '#F97316', strokeWidth: 2, r: 4 }}
+                  name="Temperature (°C)"
+                />
+                <Line 
+                  yAxisId="right"
+                  type="monotone" 
+                  dataKey="humidity" 
+                  stroke="#06B6D4" 
+                  strokeWidth={3}
+                  dot={{ fill: '#06B6D4', strokeWidth: 2, r: 4 }}
+                  name="Humidity (%)"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Water Quality Chart */}
         <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
           <h3 className="text-xl font-semibold text-gray-800 mb-6">Water Quality Parameters (12h)</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={waterQualityData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
-              <YAxis stroke="#6b7280" fontSize={12} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px'
-                }}
-              />
-              <Legend />
-              <Bar dataKey="turbidity" fill="#8B5CF6" name="Turbidity (NTU)" />
-              <Bar dataKey="dissolvedOxygen" fill="#06B6D4" name="DO (mg/L)" />
-            </BarChart>
-          </ResponsiveContainer>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-64">
+              <LoadingSpinner size="lg" text="Loading water quality data..." />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={waterQualityData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="time" stroke="#6b7280" fontSize={12} />
+                <YAxis stroke="#6b7280" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px'
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="turbidity" fill="#8B5CF6" name="Turbidity (NTU)" />
+                <Bar dataKey="dissolvedOxygen" fill="#06B6D4" name="DO (mg/L)" />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Sensor Distribution */}
         <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
           <h3 className="text-xl font-semibold text-gray-800 mb-6">Sensor Distribution</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={sensorDistribution}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {sensorDistribution.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px'
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-64">
+              <LoadingSpinner size="lg" text="Loading sensor data..." />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={sensorDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {sensorDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px'
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </div>
+
+
 
       {/* Recent Data */}
       <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
@@ -377,42 +422,67 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {isLoading ? (
         <div className="space-y-4">
-          {recentData.map((item) => {
-            const Icon = item.icon
-            return (
-              <div key={item.id} className="backdrop-blur-sm bg-white/5 rounded-lg p-4 border border-white/10 hover:bg-white/10 transition-all duration-200">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color}`}>
-                      <Icon className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-800">{item.type}</p>
-                      <p className="text-sm text-gray-600">{item.location}</p>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="backdrop-blur-sm bg-white/5 rounded-lg p-4 border border-white/10 animate-pulse">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                    <div className="w-8 h-8 bg-gray-300 rounded-lg"></div>
+                    <div className="space-y-2">
+                      <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                      <div className="w-32 h-3 bg-gray-300 rounded"></div>
                     </div>
                   </div>
-                  
                   <div className="flex items-center space-x-4">
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-800">{item.value}</p>
-                      <p className="text-xs text-gray-500">{item.timestamp}</p>
+                    <div className="text-right space-y-1">
+                      <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                      <div className="w-20 h-3 bg-gray-300 rounded"></div>
                     </div>
-                    
-                    <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
-                      item.status === 'verified' 
-                        ? 'bg-green-100/50 text-green-700 border border-green-200/50' 
-                        : 'bg-yellow-100/50 text-yellow-700 border border-yellow-200/50'
-                    }`}>
-                      <FaCheckCircle className="h-3 w-3" />
-                      <span>{item.status}</span>
-                    </div>
+                    <div className="w-16 h-6 bg-gray-300 rounded-full"></div>
                   </div>
                 </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {recentData.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.id} className="backdrop-blur-sm bg-white/5 rounded-lg p-4 border border-white/10 hover:bg-white/10 transition-all duration-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color}`}>
+                        <Icon className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800">{item.type}</p>
+                    <p className="text-sm text-gray-600">{item.location}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-4">
+                  <div className="text-right">
+                    <p className="font-semibold text-gray-800">{item.value}</p>
+                    <p className="text-xs text-gray-500">{item.timestamp}</p>
+                  </div>
+                  
+                  <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
+                    item.status === 'verified' 
+                      ? 'bg-green-100/50 text-green-700 border border-green-200/50' 
+                      : 'bg-yellow-100/50 text-yellow-700 border border-yellow-200/50'
+                  }`}>
+                        <FaCheckCircle className="h-3 w-3" />
+                    <span>{item.status}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+              )
+            })}
         </div>
+        )}
       </div>
     </div>
   )

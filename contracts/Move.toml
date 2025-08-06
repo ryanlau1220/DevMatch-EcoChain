@@ -1,0 +1,13 @@
+[package]
+name = "ecochain"
+version = "1.0.0"
+edition = "2024.beta"
+authors = ["EcoChain Team"]
+
+[addresses]
+ecochain = "0x0"
+sensor_registry = "0x0"
+data_oracle = "0x0"
+trust_system = "0x0"
+tokenomics = "0x0"
+test_ecochain = "0x0" 

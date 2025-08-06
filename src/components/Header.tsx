@@ -8,7 +8,8 @@ import {
   FaBolt, 
   FaUser, 
   FaBars, 
-  FaTimes 
+  FaTimes,
+  FaLink
 } from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 import LoginModal from './LoginModal'
@@ -30,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'verification', label: 'Verification', icon: FaShieldAlt },
     { id: 'records', label: 'On-Chain Records', icon: FaDatabase },
     { id: 'visualization', label: 'Visualization', icon: FaFileAlt },
+    { id: 'blockchain', label: 'Blockchain', icon: FaLink },
   ]
 
   const handleNavClick = (tabId: string) => {

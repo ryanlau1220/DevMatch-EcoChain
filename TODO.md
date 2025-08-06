@@ -8,266 +8,248 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - **Sui (Core Platform)**: Object-centric model for managing virtual sensors as NFTs
 - **Oasis Protocol (Trust Layer)**: Confidential smart contract execution and ROFL for off-chain computation
 - **Blockchain for Good Alliance**: Addresses UN SDGs 11 and 13
-- **The Graph Track 1**: Data accessibility through Subgraph indexing
+- **The Graph**: Track 1 - Data accessibility through Subgraph indexing
+- **Ethereum Foundation**: Track 2 - Best App Built Using Scaffold-ETH 2 for rapid Ethereum dapp development
+- **Ethereum Foundation**: Track 3 - Best Tooling for Prediction Markets Built on Ethereum for environmental prediction markets
 - **ChatAndBuild**: AI Agent for natural language querying
 
-## ✅ COMPLETED FEATURES
+## COMPLETED FEATURES
 
 ### Phase 0: Foundation & Research
-- [x] **React + TypeScript Setup**: Modern frontend framework with type safety
-- [x] **Vite Build System**: Fast development and build tooling
-- [x] **Tailwind CSS**: Utility-first styling framework
-- [x] **Glassmorphism UI Design**: Modern, beautiful interface
-- [x] **Responsive Design**: Mobile and desktop compatibility
+- React + TypeScript setup with modern development practices
+- Vite build system for fast development and production builds
+- Tailwind CSS with glassmorphism UI design
+- Responsive design for mobile and desktop compatibility
 
 ### Phase 1: Core Infrastructure (MVP)
-- [x] **Sui zkLogin Authentication**: 
-  - OAuth2 integration (Google, Facebook, Twitch, Apple)
-  - Zero-knowledge proof simulation
-  - Session management with localStorage
-  - Demo mode for testing without real credentials
-- [x] **Frontend Architecture**:
-  - React Context for state management
-  - Custom hooks (useAuth)
-  - Component-based architecture
-  - Navigation system with tab switching
-- [x] **UI Components**:
-  - Header with navigation
-  - Login modal with OAuth providers
-  - User profile component
-  - Dashboard layout
-  - Data generation interface
-  - Verification system UI
-  - On-chain records display
-  - Data visualization framework
+- Sui zkLogin authentication with OAuth2 integration (Google, Facebook, Twitch, Apple)
+- Frontend architecture with React Context and custom hooks
+- Comprehensive UI components with navigation system
+- Real-time simulated environmental data generation
+- Interactive data visualization with Recharts library
+- Error boundaries and loading states for robust user experience
+- Icon library management (replaced lucide-react with React Icons)
+- UI/UX improvements with background image fixes and chart color corrections
 
 ### Phase 2: Frontend & AI Integration
-- [x] **Progressive Web App (PWA) Structure**:
-  - React.js with TypeScript
-  - Tailwind CSS for responsive design
-  - Component-based architecture
-  - Navigation system
-- [x] **Authentication System**:
-  - Sui zkLogin integration
-  - OAuth2 provider support
-  - Session management
-  - Demo mode functionality
-- [x] **Icon Library Management**:
-  - Replaced lucide-react with React Icons (FontAwesome)
-  - Fixed ad blocker compatibility issues
-  - Updated all components with consistent iconography
-- [x] **Real-Time Dashboard with Data Visualization**:
-  - Real-time simulated data generation (updates every 30s)
-  - Beautiful charts with Recharts library
-  - Air Quality Trends (24h line chart)
-  - Temperature & Humidity (7d area chart)
-  - Water Quality Parameters (12h bar chart)
-  - Sensor Distribution (pie chart)
-  - Interactive tooltips and responsive design
-- [x] **UI/UX Improvements**:
-  - Fixed background image coverage for all pages
-  - Corrected temperature chart colors (orange instead of green)
-  - Enhanced glassmorphism styling
-  - Improved responsive layout
+- Progressive Web App (PWA) structure with React.js and TypeScript
+- Authentication system with Sui zkLogin integration and demo mode
+- Real-time dashboard with data visualization (air quality, temperature, water quality)
+- Enhanced UI components with glassmorphism styling and responsive layout
+- Scaffold-ETH 2 integration for Ethereum development
+- Environmental prediction market implementation
 
-## 🔄 IN PROGRESS
+### Phase 1: Core Infrastructure (MVP) - COMPLETED
+- Sui Smart Contracts for Virtual Sensor Management
+  - Working SimpleSensor NFT contract (builds successfully)
+  - Sensor registration and ownership transfer
+  - Trust score management (0-100)
+  - Status management (active/inactive/suspended)
+  - Event emission for all operations
+  - DEPLOYED TO SUI TESTNET - Package ID: `0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc85d9105`
+  - FRONTEND INTEGRATION - Hybrid solution with blockchain service layer
+  - REAL-TIME BLOCKCHAIN DATA - Live connection to Sui testnet
+  - DEDICATED BLOCKCHAIN MANAGEMENT PAGE - Complete UI for sensor management
+  - INTERACTIVE BLOCKCHAIN FEATURES - Register, transfer, and update trust scores
+
+## IN PROGRESS
 
 ### Phase 1: Core Infrastructure (MVP)
-- [ ] **Sui Smart Contracts for Virtual Sensor Management**:
-  - [ ] Move smart contracts for VirtualSensor NFTs
-  - [ ] Sensor registration and ownership transfer
-  - [ ] Trust score management
-  - [ ] Deploy to Sui Testnet
+- Oasis ROFL Confidential Verification Module
+  - ROFL agent development (Go/Python)
+  - Statistical anomaly detection
+  - Cross-sensor validation
+  - Cryptographic proof generation
+  - Deploy to Oasis Sapphire Testnet
 
-- [ ] **Oasis ROFL Confidential Verification Module**:
-  - [ ] ROFL agent development (Go/Python)
-  - [ ] Statistical anomaly detection
-  - [ ] Cross-sensor validation
-  - [ ] Cryptographic proof generation
-  - [ ] Deploy to Oasis Sapphire Testnet
+- Simulated Data Ingestion Pipeline
+  - Backend service (Node.js/Python)
+  - Realistic environmental data generation
+  - Cryptographic signing of data points
+  - Secure data streaming to ROFL
+  - TLS implementation
 
-- [ ] **Simulated Data Ingestion Pipeline**:
-  - [ ] Backend service (Node.js/Python)
-  - [ ] Realistic environmental data generation
-  - [ ] Cryptographic signing of data points
-  - [ ] Secure data streaming to ROFL
-  - [ ] TLS implementation
-
-- [ ] **The Graph Subgraph for Core Data Indexing**:
-  - [ ] GraphQL schema definition
-  - [ ] AssemblyScript mapping functions
-  - [ ] VirtualSensor entity indexing
-  - [ ] VerifiedReading entity indexing
-  - [ ] Deploy to The Graph hosted service
+- The Graph Subgraph for Core Data Indexing
+  - GraphQL schema definition
+  - AssemblyScript mapping functions
+  - VirtualSensor entity indexing
+  - VerifiedReading entity indexing
+  - Deploy to The Graph hosted service
 
 ### Phase 2: Frontend & AI Integration
-- [ ] **Enhanced PWA Features**:
-  - [ ] Virtual sensor management dashboard
-  - [ ] Real-time data visualization
-  - [ ] Interactive charts (Recharts/Chart.js)
-  - [ ] Geographic mapping (Leaflet.js/Mapbox)
-  - [ ] Data filtering and search
+- Enhanced PWA Features
+  - Virtual sensor management dashboard
+  - Real-time data visualization
+  - Interactive charts (Recharts/Chart.js)
+  - Geographic mapping (Leaflet.js/Mapbox)
+  - Data filtering and search
 
-- [ ] **ChatAndBuild AI Agent Integration**:
-  - [ ] Gemini API integration
-  - [ ] Natural language query processing
-  - [ ] GraphQL query translation
-  - [ ] Intelligent data analysis
-  - [ ] Alert system for anomalies
+- Scaffold-ETH 2 Integration
+  - Ethereum smart contract development
+  - Environmental prediction market contracts
+  - Oracle bridge between Sui and Ethereum
+  - Market creation and management tools
+  - Liquidity pool implementation
 
-## 📋 PENDING FEATURES
+- ChatAndBuild AI Agent Integration
+  - Gemini API integration
+  - Natural language query processing
+  - GraphQL query translation
+  - Intelligent data analysis
+  - Alert system for anomalies
+
+## PENDING FEATURES
 
 ### Phase 3: Advanced Features & Tokenomics
-- [ ] **Enhanced Simulated Data Signing**:
-  - [ ] Robust cryptographic signing (ECDSA)
-  - [ ] Unique private key management
-  - [ ] Public key registration on Sui
-  - [ ] Digital signature verification in ROFL
+- Enhanced Simulated Data Signing
+  - Robust cryptographic signing (ECDSA)
+  - Unique private key management
+  - Public key registration on Sui
+  - Digital signature verification in ROFL
 
-- [ ] **Reputation System for Virtual Sensors**:
-  - [ ] Dynamic trust score management
-  - [ ] Anomaly detection integration
-  - [ ] Slashing logic for malicious sensors
-  - [ ] $ECOCHAIN staking mechanism
+- Reputation System for Virtual Sensors
+  - Dynamic trust score management
+  - Anomaly detection integration
+  - Slashing logic for malicious sensors
+  - $ECOCHAIN staking mechanism
 
-- [ ] **Dual-Tokenomics Implementation**:
-  - [ ] $ECOCHAIN governance/staking token
-  - [ ] Data Credit stable token
-  - [ ] Staking contracts
-  - [ ] Buyback and burn mechanism
-  - [ ] Liquidity pool management
+- Dual-Tokenomics Implementation
+  - $ECOCHAIN governance/staking token
+  - Data Credit stable token
+  - Staking contracts
+  - Buyback and burn mechanism
+  - Liquidity pool management
 
-- [ ] **Refined ROFL Verification Logic**:
-  - [ ] Advanced statistical models
-  - [ ] Time-series forecasting
-  - [ ] Machine learning integration
-  - [ ] Spatial correlation analysis
+- Environmental Prediction Markets
+  - Market creation and management tools
+  - Trading interface with liquidity pools
+  - Oracle integration with environmental data
+  - Market resolution and dispute handling
+  - Advanced market analytics and insights
+
+- Refined ROFL Verification Logic
+  - Advanced statistical models
+  - Time-series forecasting
+  - Machine learning integration
+  - Spatial correlation analysis
 
 ### Phase 4: Pilot Program & Iteration
-- [ ] **Partner Onboarding**:
-  - [ ] Local council collaboration
-  - [ ] University partnership
-  - [ ] PWA onboarding process
-  - [ ] Simulated data integration
+- Partner Onboarding
+  - Local council collaboration
+  - University partnership
+  - PWA onboarding process
+  - Simulated data integration
 
-- [ ] **Performance Monitoring**:
-  - [ ] Data transmission metrics
-  - [ ] ROFL processing performance
-  - [ ] Sui transaction monitoring
-  - [ ] Subgraph indexing efficiency
+- Performance Monitoring
+  - Data transmission metrics
+  - ROFL processing performance
+  - Sui transaction monitoring
+  - Subgraph indexing efficiency
 
-- [ ] **Feedback Collection & Iteration**:
-  - [ ] User feedback system
-  - [ ] UX improvements
-  - [ ] Data utility optimization
-  - [ ] Verification proof clarity
+- Feedback Collection & Iteration
+  - User feedback system
+  - UX improvements
+  - Data utility optimization
+  - Verification proof clarity
 
 ### Phase 5: Public Launch & Scaling
-- [ ] **Public Network Launch**:
-  - [ ] Sui Mainnet deployment
-  - [ ] Oasis Sapphire Mainnet deployment
-  - [ ] Public announcement
-  - [ ] Documentation updates
+- Public Network Launch
+  - Sui Mainnet deployment
+  - Oasis Sapphire Mainnet deployment
+  - Public announcement
+  - Documentation updates
 
-- [ ] **Open Participation**:
-  - [ ] Virtual sensor certification
-  - [ ] Decentralized sensor registration
-  - [ ] Reward distribution system
-  - [ ] Community governance
+- Open Participation
+  - Virtual sensor certification
+  - Decentralized sensor registration
+  - Reward distribution system
+  - Community governance
 
-- [ ] **Data Market Launch**:
-  - [ ] Data credit marketplace
-  - [ ] NGO and researcher access
-  - [ ] Government body integration
-  - [ ] Monetization model activation
+- Data Market Launch
+  - Data credit marketplace
+  - NGO and researcher access
+  - Government body integration
+  - Monetization model activation
 
-- [ ] **Community Governance**:
-  - [ ] On-chain governance framework
-  - [ ] $ECOCHAIN holder voting
-  - [ ] Treasury management
-  - [ ] Continuous improvement process
+- Community Governance
+  - On-chain governance framework
+  - $ECOCHAIN holder voting
+  - Treasury management
+  - Continuous improvement process
 
-## 🐛 BUG FIXES & IMPROVEMENTS
+## BUG FIXES & IMPROVEMENTS
 
 ### Recently Fixed
-- [x] **Duplicate Declaration Error**: Renamed AuthProvider type to AuthProviderType
-- [x] **Ad Blocker Issues**: Added troubleshooting for lucide-react icon blocking
-- [x] **Environment Variables**: Fixed process.env to import.meta.env for Vite
-- [x] **Function Initialization**: Reordered handleAuthCallback function definition
-- [x] **TypeScript Errors**: Fixed all compilation issues
+- Duplicate Declaration Error: Renamed AuthProvider type to AuthProviderType
+- Ad Blocker Issues: Added troubleshooting for lucide-react icon blocking
+- Environment Variables: Fixed process.env to import.meta.env for Vite
+- Function Initialization: Reordered handleAuthCallback function definition
+- TypeScript Errors: Fixed all compilation issues
 
 ### Pending Improvements
-- [ ] **Icon Library**: Replace lucide-react with ad-blocker-friendly alternative
-- [ ] **Error Boundaries**: Add React error boundaries for better error handling
-- [ ] **Loading States**: Improve loading indicators and user feedback
-- [ ] **Accessibility**: Add ARIA labels and keyboard navigation
-- [ ] **Performance**: Optimize bundle size and loading times
-- [ ] **Testing**: Add unit tests and integration tests
-- [ ] **Documentation**: Improve code documentation and API docs
+- Accessibility: Add ARIA labels and keyboard navigation
+- Performance: Optimize bundle size and loading times
+- Testing: Add unit tests and integration tests
+- Documentation: Improve code documentation and API docs
 
-## 🚀 IMMEDIATE NEXT STEPS
+## IMMEDIATE NEXT STEPS
 
 ### Priority 1 (This Week)
-1. **Complete Dashboard Component**: Add real data visualization and statistics
-2. **Fix Ad Blocker Issues**: Replace lucide-react with alternative icon library
-3. **Add Error Boundaries**: Implement proper error handling
-4. **Improve Loading States**: Better user feedback during operations
+1. Complete Dashboard Component: Add real data visualization and statistics
+2. Fix Ad Blocker Issues: Replace lucide-react with alternative icon library
+3. Add Error Boundaries: Implement proper error handling
+4. Improve Loading States: Better user feedback during operations
 
 ### Priority 2 (Next 2 Weeks)
-1. **Sui Smart Contract Development**: Start Move contract development
-2. **Backend API Setup**: Create Node.js/Python backend for data generation
-3. **The Graph Subgraph**: Begin Subgraph development
-4. **Enhanced UI Components**: Complete all component functionality
+1. Scaffold-ETH 2 Integration: Set up Ethereum development environment
+2. Environmental Prediction Markets: Implement market creation and trading
+3. Oracle Bridge: Connect Sui environmental data to Ethereum markets
+4. Enhanced UI Components: Complete all component functionality
 
 ### Priority 3 (Next Month)
-1. **Oasis ROFL Integration**: Develop confidential computation module
-2. **AI Agent Integration**: Implement Gemini API for natural language queries
-3. **Tokenomics Implementation**: Deploy token contracts
-4. **Testing & Documentation**: Comprehensive testing and documentation
+1. Oasis ROFL Integration: Develop confidential computation module
+2. AI Agent Integration: Implement Gemini API for natural language queries
+3. Tokenomics Implementation: Deploy token contracts
+4. Advanced Prediction Markets: Implement liquidity pools and AMM functionality
+5. Testing & Documentation: Comprehensive testing and documentation
 
-## 📊 PROGRESS TRACKING
+## PROGRESS TRACKING
 
-### Overall Progress: 25% Complete
-- **Phase 0**: 100% ✅
-- **Phase 1**: 15% 🔄
-- **Phase 2**: 30% 🔄
-- **Phase 3**: 0% ⏳
-- **Phase 4**: 0% ⏳
-- **Phase 5**: 0% ⏳
+### Overall Progress: 35% Complete
+- **Phase 0**: 100% Complete
+- **Phase 1**: 25% In Progress
+- **Phase 2**: 40% In Progress
+- **Phase 3**: 0% Pending
+- **Phase 4**: 0% Pending
+- **Phase 5**: 0% Pending
 
 ### Key Milestones
-- [x] **MVP Frontend**: Complete ✅
-- [ ] **Smart Contracts**: In Progress 🔄
-- [ ] **Backend Services**: Not Started ⏳
-- [ ] **AI Integration**: Not Started ⏳
-- [ ] **Tokenomics**: Not Started ⏳
-- [ ] **Public Launch**: Not Started ⏳
+- MVP Frontend: Complete
+- Smart Contracts: In Progress
+- Backend Services: Not Started
+- AI Integration: Not Started
+- Tokenomics: Not Started
+- Public Launch: Not Started
 
-## 🎯 SUCCESS METRICS
+## SUCCESS METRICS
 
 ### Technical Metrics
-- [ ] Smart contract deployment success rate
-- [ ] Data processing latency
-- [ ] System uptime and reliability
-- [ ] User authentication success rate
-- [ ] API response times
+- Smart contract deployment success rate
+- Data processing latency
+- System uptime and reliability
+- User authentication success rate
+- API response times
 
 ### User Metrics
-- [ ] User registration and retention
-- [ ] Feature adoption rates
-- [ ] User satisfaction scores
-- [ ] Support ticket volume
-- [ ] Community engagement
+- User registration and retention
+- Feature adoption rates
+- User satisfaction scores
+- Support ticket volume
+- Community engagement
 
 ### Business Metrics
-- [ ] Virtual sensor registration
-- [ ] Data transaction volume
-- [ ] Token circulation and utility
-- [ ] Partnership agreements
-- [ ] Revenue generation
-
----
-
-**Last Updated**: December 2024
-**Next Review**: Weekly
-**Project Status**: Active Development 
+- Virtual sensor registration
+- Data transaction volume
+- Token circulation and utility
+- Partnership agreements
+- Revenue generation
