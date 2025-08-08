@@ -100,6 +100,18 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Environmental data visualization and trend analysis
 - Cross-chain data integrity and trust mechanisms
 
+### AI Agent Chat Integration
+- **Google Gemini API Integration**: Real-time AI-powered environmental intelligence
+- **Natural Language Processing**: Ask questions about environmental data in plain English
+- **Markdown Rendering**: Beautifully formatted AI responses with headers, lists, and emphasis
+- **Provider Identification**: Clear indication of Gemini AI vs Mock Mode operation
+- **Chat History Persistence**: All conversations saved with localStorage
+- **Quick Actions Panel**: Pre-built environmental analysis queries
+- **Context-Aware Suggestions**: AI-generated follow-up questions and recommendations
+- **Clear Chat History**: Easy reset functionality for fresh conversations
+- **Environmental Specialization**: AI trained on environmental data, prediction markets, and sustainability
+- **Fallback System**: Graceful degradation to mock responses when API unavailable
+
 ### Data Persistence
 - localStorage integration for seamless user experience
 - User-created markets and trading positions saved across sessions
@@ -153,6 +165,14 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 3. **Verify Data**: Validate and approve submitted environmental data
 4. **Monitor Bridge**: Track cross-chain data flow and network status
 
+### AI Agent Chat
+1. **Ask Questions**: Use natural language to query environmental data
+2. **Quick Actions**: Use pre-built queries for common environmental topics
+3. **View Responses**: Get beautifully formatted AI responses with markdown
+4. **Follow Suggestions**: Click on AI-generated follow-up questions
+5. **Clear History**: Reset conversations when needed
+6. **Check Provider**: See whether you're using Gemini AI or Mock Mode
+
 ### Navigation
 - Use the header navigation to switch between different sections
 - Each section has a focused purpose and clean interface
@@ -161,12 +181,13 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 ## 🔧 Configuration
 
 ### Environment Variables
-The app runs in demo mode by default. For production OAuth, create a `.env` file:
+The app runs in demo mode by default. For production OAuth and AI integration, create a `.env` file:
 ```env
 VITE_GOOGLE_CLIENT_ID=your_google_client_id
 VITE_FACEBOOK_CLIENT_ID=your_facebook_client_id
 VITE_TWITCH_CLIENT_ID=your_twitch_client_id
 VITE_APPLE_CLIENT_ID=your_apple_client_id
+VITE_GEMINI_API_KEY=your_gemini_api_key
 ```
 
 ### OAuth Setup (Production)
@@ -174,6 +195,13 @@ VITE_APPLE_CLIENT_ID=your_apple_client_id
 2. **Facebook OAuth**: Set up in Facebook Developers
 3. **Twitch OAuth**: Register in Twitch Developers
 4. **Apple OAuth**: Configure in Apple Developer
+
+### AI Integration Setup
+1. **Get Gemini API Key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. **Add to Environment**: Set `VITE_GEMINI_API_KEY=your_api_key` in `.env`
+3. **Restart Server**: Restart the development server to load the API key
+4. **Verify Integration**: Check the AI Agent Chat for "Gemini AI" status badge
+5. **Fallback Mode**: App automatically uses mock responses if API key is missing
 
 ## 📁 Project Structure
 
@@ -184,6 +212,7 @@ src/
 │   ├── BlockchainManagement.tsx  # Blockchain management interface
 │   ├── PredictionMarket.tsx # Environmental prediction markets
 │   ├── OracleBridge.tsx     # Cross-chain oracle bridge
+│   ├── AIAgentChat.tsx      # AI-powered environmental intelligence chat
 │   ├── DataGeneration.tsx   # Data generation interface
 │   ├── DataVisualization.tsx # Additional data visualization
 │   ├── Header.tsx           # Navigation header
@@ -194,7 +223,8 @@ src/
 │   ├── ErrorBoundary.tsx    # Error handling component
 │   └── LoadingSpinner.tsx   # Loading states and skeletons
 ├── services/                # Service layer
-│   └── blockchain.ts        # Sui blockchain integration
+│   ├── blockchain.ts        # Sui blockchain integration
+│   └── aiService.ts         # Google Gemini AI integration
 ├── config/                  # Configuration files
 │   └── auth.ts             # Authentication configuration
 ├── hooks/                   # Custom React hooks

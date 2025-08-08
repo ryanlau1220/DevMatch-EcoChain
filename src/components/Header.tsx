@@ -9,7 +9,8 @@ import {
   FaUser, 
   FaBars, 
   FaTimes,
-  FaLink
+  FaLink,
+  FaRobot
 } from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 import LoginModal from './LoginModal'
@@ -34,6 +35,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'blockchain', label: 'Blockchain', icon: FaLink },
     { id: 'prediction-markets', label: 'Prediction Markets', icon: FaChartBar },
     { id: 'oracle-bridge', label: 'Oracle Bridge', icon: FaLink },
+    { id: 'ai-agent-chat', label: 'AI Agent Chat', icon: FaRobot },
   ]
 
   const handleNavClick = (tabId: string) => {
