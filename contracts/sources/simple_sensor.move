@@ -24,6 +24,14 @@ module sensor_registry::simple_sensor {
         trust_score: u8,
         /// Sensor status (0: Active, 1: Inactive, 2: Suspended)
         status: u8,
+        /// Total number of verifications
+        verification_count: u64,
+        /// Number of successful verifications
+        successful_verifications: u64,
+        /// Reputation multiplier (1-5)
+        reputation_multiplier: u8,
+        /// Last verification timestamp
+        last_verification: u64,
     }
 
     /// Sensor Registry - manages all registered sensors
@@ -41,6 +49,12 @@ module sensor_registry::simple_sensor {
 
     const MAX_TRUST_SCORE: u8 = 100;
     const MIN_TRUST_SCORE: u8 = 0;
+    
+    const MAX_REPUTATION_MULTIPLIER: u8 = 5;
+    const MIN_REPUTATION_MULTIPLIER: u8 = 1;
+    
+    const VERIFICATION_REWARD: u8 = 2;
+    const VERIFICATION_PENALTY: u8 = 1;
 
     // ===== EVENTS =====
 
@@ -90,6 +104,10 @@ module sensor_registry::simple_sensor {
             registered_at: tx_context::epoch(ctx),
             trust_score: 50, // Default trust score
             status: SENSOR_STATUS_ACTIVE,
+            verification_count: 0,
+            successful_verifications: 0,
+            reputation_multiplier: 1,
+            last_verification: 0,
         };
 
         // Update registry
@@ -183,5 +201,64 @@ module sensor_registry::simple_sensor {
     /// Get registry statistics
     public fun get_registry_stats(registry: &SensorRegistry): u64 {
         registry.total_sensors
+    }
+
+    /// Handle verification result and update reputation
+    public fun handle_verification_result(
+        sensor: &mut SimpleSensor,
+        success: bool,
+        ctx: &mut TxContext
+    ) {
+        // Update verification counts
+        sensor.verification_count = sensor.verification_count + 1;
+        if (success) {
+            sensor.successful_verifications = sensor.successful_verifications + 1;
+        };
+
+        // Calculate success rate
+        let success_rate = if (sensor.verification_count == 0) {
+            0
+        } else {
+            (sensor.successful_verifications * 100) / sensor.verification_count
+        };
+
+        // Update reputation multiplier based on success rate
+        if (success_rate >= 90) {
+            if (sensor.reputation_multiplier < MAX_REPUTATION_MULTIPLIER) {
+                sensor.reputation_multiplier = sensor.reputation_multiplier + 1;
+            }
+        } else if (success_rate < 70 && sensor.reputation_multiplier > MIN_REPUTATION_MULTIPLIER) {
+            sensor.reputation_multiplier = sensor.reputation_multiplier - 1;
+        };
+
+        // Update trust score
+        if (success) {
+            let reward = VERIFICATION_REWARD * sensor.reputation_multiplier;
+            if (sensor.trust_score <= (MAX_TRUST_SCORE - (reward as u8))) {
+                sensor.trust_score = sensor.trust_score + (reward as u8);
+            } else {
+                sensor.trust_score = MAX_TRUST_SCORE;
+            }
+        } else {
+            let penalty = VERIFICATION_PENALTY * sensor.reputation_multiplier;
+            if (sensor.trust_score >= (MIN_TRUST_SCORE + (penalty as u8))) {
+                sensor.trust_score = sensor.trust_score - (penalty as u8);
+            } else {
+                sensor.trust_score = MIN_TRUST_SCORE;
+            }
+        };
+
+        // Update last verification timestamp
+        sensor.last_verification = tx_context::epoch(ctx);
+    }
+
+    /// Get sensor reputation details
+    public fun get_sensor_reputation(sensor: &SimpleSensor): (u64, u64, u8, u64) {
+        (
+            sensor.verification_count,
+            sensor.successful_verifications,
+            sensor.reputation_multiplier,
+            sensor.last_verification,
+        )
     }
 } 

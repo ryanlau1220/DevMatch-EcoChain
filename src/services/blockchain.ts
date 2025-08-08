@@ -7,9 +7,6 @@ const PACKAGE_ID = import.meta.env.VITE_SUI_PACKAGE_ID || '0x5bbfeb3847bbea0aad7
 const SENSOR_REGISTRY_ID = import.meta.env.VITE_SUI_REGISTRY_ID || '0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e';
 const NETWORK = import.meta.env.VITE_SUI_NETWORK || 'testnet';
 
-// Initialize Sui client
-const client = new SuiClient({ url: getFullnodeUrl(NETWORK) });
-
 // Types for blockchain data
 export interface BlockchainSensor {
   id: string;
@@ -19,6 +16,10 @@ export interface BlockchainSensor {
   registeredAt: number;
   trustScore: number;
   status: number;
+  verificationCount: number;
+  successfulVerifications: number;
+  reputationMultiplier: number;
+  lastVerification: number;
 }
 
 export interface SensorRegistryStats {
@@ -30,7 +31,11 @@ export class BlockchainService {
   private client: SuiClient;
 
   constructor() {
-    this.client = client;
+    this.client = new SuiClient({ url: getFullnodeUrl(NETWORK) });
+  }
+
+  public getClient(): SuiClient {
+    return this.client;
   }
 
   // Get sensor registry statistics
@@ -78,7 +83,11 @@ export class BlockchainService {
               owner: fields.owner,
               registeredAt: Number(fields.registered_at),
               trustScore: Number(fields.trust_score),
-              status: Number(fields.status)
+              status: Number(fields.status),
+              verificationCount: Number(fields.verification_count || 0),
+              successfulVerifications: Number(fields.successful_verifications || 0),
+              reputationMultiplier: Number(fields.reputation_multiplier || 1),
+              lastVerification: Number(fields.last_verification || 0)
             });
           }
         }
@@ -96,23 +105,22 @@ export class BlockchainService {
     try {
       const events = await this.client.queryEvents({
         query: {
-          MoveModule: {
-            package: PACKAGE_ID,
-            module: 'simple_sensor',
-            event: 'SensorRegistered'
-          }
+          MoveEventType: `${PACKAGE_ID}::simple_sensor::SensorRegistered`
         },
         limit,
         order: 'descending'
       });
 
-      return events.data.map(event => ({
-        sensorId: event.parsedJson?.sensor_id,
-        owner: event.parsedJson?.owner,
-        sensorType: event.parsedJson?.sensor_type,
-        timestamp: event.parsedJson?.timestamp,
-        transactionDigest: event.id.txDigest
-      }));
+      return events.data.map(event => {
+        const parsedJson = event.parsedJson as any;
+        return {
+          sensorId: parsedJson?.sensor_id,
+          owner: parsedJson?.owner,
+          sensorType: parsedJson?.sensor_type,
+          timestamp: parsedJson?.timestamp,
+          transactionDigest: event.id.txDigest
+        };
+      });
     } catch (error) {
       console.error('Error fetching recent registrations:', error);
       return [];
@@ -142,7 +150,11 @@ export class BlockchainService {
           owner: fields.owner,
           registeredAt: Number(fields.registered_at),
           trustScore: Number(fields.trust_score),
-          status: Number(fields.status)
+          status: Number(fields.status),
+          verificationCount: Number(fields.verification_count || 0),
+          successfulVerifications: Number(fields.successful_verifications || 0),
+          reputationMultiplier: Number(fields.reputation_multiplier || 1),
+          lastVerification: Number(fields.last_verification || 0)
         };
       }
       return null;

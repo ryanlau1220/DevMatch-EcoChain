@@ -55,7 +55,6 @@ const Verification: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
         <div className="flex items-center justify-between">
           <div>
@@ -78,89 +77,55 @@ const Verification: React.FC = () => {
           </div>
         )}
 
-        <button
-          onClick={startVerification}
-          disabled={verificationStatus === 'verifying'}
-          className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-400 to-blue-500 text-white rounded-lg hover:from-purple-500 hover:to-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50"
-        >
-          <FaShieldAlt className={`h-5 w-5 ${verificationStatus === 'verifying' ? 'animate-pulse' : ''}`} />
-          <span>{verificationStatus === 'verifying' ? 'Verifying...' : 'Start Verification'}</span>
-        </button>
-      </div>
-
-      {/* Verification Process */}
-      <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
-        <h3 className="text-xl font-semibold text-gray-800 mb-6">Verification Process</h3>
-        
-        <div className="space-y-4">
-          {verificationSteps.map((step, index) => {
-            const Icon = step.icon
-            const isActive = verificationStatus === 'verifying' && step.status === 'verifying'
-            
-            return (
-              <div key={step.id} className="flex items-center space-x-4 p-4 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10">
-                <div className={`p-3 rounded-lg ${
-                  step.status === 'complete' 
-                    ? 'bg-green-500 shadow-lg' 
-                    : step.status === 'verifying'
-                    ? 'bg-blue-500 shadow-lg animate-pulse'
-                    : 'bg-gray-400 shadow-lg'
-                }`}>
-                  <Icon className="h-5 w-5 text-white" />
+        {/* Verification Process */}
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold mb-4">Verification Process</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {verificationSteps.map((step) => (
+              <div key={step.id} className="text-center">
+                <div className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                  <step.icon className="h-8 w-8 text-white" />
                 </div>
-                
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-800">{step.name}</h4>
-                  <div className="flex items-center space-x-2 mt-1">
-                    {step.status === 'complete' && (
-                      <>
-                        <FaCheckCircle className="h-4 w-4 text-green-500" />
-                        <span className="text-sm text-green-600">Completed</span>
-                      </>
-                    )}
-                    {step.status === 'verifying' && (
-                      <>
-                        <FaClock className="h-4 w-4 text-blue-500 animate-spin" />
-                        <span className="text-sm text-blue-600">In Progress</span>
-                      </>
-                    )}
-                    {step.status === 'pending' && (
-                      <>
-                        <FaClock className="h-4 w-4 text-gray-500" />
-                        <span className="text-sm text-gray-500">Pending</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="text-right">
-                  <span className="text-sm text-gray-600">Step {step.id}/4</span>
+                <h4 className="font-medium text-gray-800 mb-2">{step.name}</h4>
+                <div className="flex items-center justify-center space-x-2 text-sm">
+                  {step.status === 'complete' && <FaCheckCircle className="text-green-500" />}
+                  {step.status === 'verifying' && <FaClock className="text-yellow-500 animate-spin" />}
+                  {step.status === 'pending' && <FaClock className="text-gray-400" />}
+                  <span className="capitalize text-gray-600">{step.status}</span>
                 </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
+          <div className="mt-6 text-center">
+            <button
+              onClick={startVerification}
+              disabled={verificationStatus === 'verifying'}
+              className={`px-6 py-3 rounded-lg text-white font-medium transition-all ${
+                verificationStatus === 'verifying'
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'
+              }`}
+            >
+              {verificationStatus === 'idle' && 'Start Verification'}
+              {verificationStatus === 'verifying' && 'Verifying...'}
+              {verificationStatus === 'complete' && 'Verification Complete'}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Recent Verifications */}
       <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-gray-800">Recent Verifications</h3>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <FaBolt className="h-4 w-4" />
-            <span>{recentVerifications.length} recent verifications</span>
-          </div>
-        </div>
-
+        <h3 className="text-lg font-semibold mb-4">Recent Verifications</h3>
         <div className="space-y-4">
           {recentVerifications.map((verification) => (
-            <div key={verification.id} className="backdrop-blur-sm bg-white/5 rounded-lg p-4 border border-white/10">
-              <div className="flex items-start justify-between mb-3">
+            <div key={verification.id} className="space-y-3">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-lg ${
-                    verification.status === 'verified' 
-                      ? 'bg-green-500 shadow-lg' 
-                      : 'bg-yellow-500 shadow-lg'
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    verification.status === 'verified'
+                      ? 'bg-gradient-to-r from-green-400 to-green-500'
+                      : 'bg-gradient-to-r from-yellow-400 to-yellow-500'
                   }`}>
                     {verification.status === 'verified' ? (
                       <FaCheckCircle className="h-4 w-4 text-white" />
@@ -224,7 +189,7 @@ const Verification: React.FC = () => {
 
       {/* Verification Methods */}
       <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Verification Methods</h3>
+        <h3 className="text-lg font-semibold mb-4">Verification Methods</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="p-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
@@ -248,16 +213,14 @@ const Verification: React.FC = () => {
             <p className="text-sm text-gray-600">Multi-node consensus ensures distributed verification reliability</p>
           </div>
           <div className="text-center">
-            <div className="p-4 rounded-full bg-gradient-to-r from-orange-400 to-red-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-              <FaFileAlt className="h-8 w-8 text-white" />
+            <div className="p-4 rounded-full bg-gradient-to-r from-red-400 to-orange-500 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+              <FaBolt className="h-8 w-8 text-white" />
             </div>
-            <h4 className="font-medium text-gray-800 mb-2">Data Integrity</h4>
-            <p className="text-sm text-gray-600">Comprehensive validation of data format, range, and consistency</p>
+            <h4 className="font-medium text-gray-800 mb-2">Real-time Validation</h4>
+            <p className="text-sm text-gray-600">Instant verification with sub-second response times</p>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default Verification
