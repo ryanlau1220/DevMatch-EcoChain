@@ -119,3 +119,35 @@ coverage/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Blockchain and Smart Contract Development
+# Hardhat
+cache/
+artifacts/
+typechain/
+typechain-types/
+
+# Ethereum
+.env.example
+.env.test
+.env.production
+
+# Private keys and secrets
+*.pem
+*.key
+.secret
+.secrets
+
+# Contract deployment artifacts
+deployments/
+deployment.json
+deployment.local.json
+
+# Gas reports
+gas-report.txt
+
+# Contract verification
+.flattened/
+
+# Local blockchain
+hardhat-deployments/

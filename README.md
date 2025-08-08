@@ -83,9 +83,29 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Sensor ownership transfer functionality
 - Trust score management with visual feedback
 - Smart contract information display with copy-to-clipboard
-- Environmental prediction market creation and management
-- Market trading interface with liquidity pools
-- Oracle bridge between Sui environmental data and Ethereum markets
+
+### Environmental Prediction Markets
+- Complete prediction market creation and management interface
+- Market trading with YES/NO outcomes and liquidity pools
+- Real-time probability calculations and market statistics
+- Interactive trading interface with position tracking
+- Market details with price history charts and analytics
+- User position management and portfolio tracking
+
+### Oracle Bridge
+- Environmental data submission from Sui sensors to Ethereum
+- Oracle registration and reputation management
+- Data verification and validation workflow
+- Real-time bridge status monitoring between networks
+- Environmental data visualization and trend analysis
+- Cross-chain data integrity and trust mechanisms
+
+### Data Persistence
+- localStorage integration for seamless user experience
+- User-created markets and trading positions saved across sessions
+- Environmental data submissions preserved on page reload
+- Oracle registrations and verification status maintained
+- Persistent state management for all user interactions
 
 ### Smart Contract Integration
 - Deployed SimpleSensor NFT contract on Sui testnet
@@ -93,8 +113,13 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Registry ID: `0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e`
 - Functions: register_sensor, transfer_sensor, update_trust_score
 - Event emission for all blockchain operations
-- Environmental prediction market contracts (Ethereum)
-- Oracle integration between Sui and Ethereum networks
+
+### Ethereum Smart Contracts
+- EnvironmentalMarket contract for prediction markets
+- OracleBridge contract for cross-chain data integration
+- OpenZeppelin v5 integration with modern security patterns
+- Hardhat development environment with TypeScript
+- Deployable to Ethereum testnets and mainnet
 
 ### Data Visualization
 - Real-time environmental data charts (air quality, temperature, water quality)
@@ -115,8 +140,18 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 3. **Register Tab**: Add new sensors to the blockchain (demo mode)
 4. **Transfer Tab**: Transfer sensor ownership to other addresses (demo mode)
 5. **Trust Scores Tab**: Update sensor trust scores with visual feedback
-6. **Prediction Markets Tab**: Create and manage environmental prediction markets
-7. **Market Trading Tab**: Trade prediction market shares with liquidity pools
+
+### Prediction Markets
+1. **Create Markets**: Set up new environmental prediction markets
+2. **Trade Shares**: Buy and sell YES/NO shares with real-time pricing
+3. **View Analytics**: Monitor market statistics and price history
+4. **Manage Positions**: Track your trading positions across all markets
+
+### Oracle Bridge
+1. **Submit Data**: Add environmental data from Sui sensors
+2. **Register Oracles**: Join the oracle network for data verification
+3. **Verify Data**: Validate and approve submitted environmental data
+4. **Monitor Bridge**: Track cross-chain data flow and network status
 
 ### Navigation
 - Use the header navigation to switch between different sections
@@ -147,6 +182,8 @@ src/
 ├── components/              # React components
 │   ├── Dashboard.tsx        # Main dashboard with data visualization
 │   ├── BlockchainManagement.tsx  # Blockchain management interface
+│   ├── PredictionMarket.tsx # Environmental prediction markets
+│   ├── OracleBridge.tsx     # Cross-chain oracle bridge
 │   ├── DataGeneration.tsx   # Data generation interface
 │   ├── DataVisualization.tsx # Additional data visualization
 │   ├── Header.tsx           # Navigation header
@@ -173,6 +210,15 @@ contracts/                   # Sui smart contracts
 ├── sources/
 │   └── simple_sensor.move  # Sensor NFT contract
 └── README.md               # Contract documentation
+
+ethereum/                    # Ethereum smart contracts
+├── contracts/
+│   ├── EnvironmentalMarket.sol  # Prediction market contract
+│   └── OracleBridge.sol         # Oracle bridge contract
+├── scripts/
+│   └── deploy.ts           # Deployment script
+├── hardhat.config.ts       # Hardhat configuration
+└── package.json            # Ethereum dependencies
 ```
 
 ### Development Commands

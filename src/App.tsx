@@ -8,6 +8,8 @@ import Verification from './components/Verification'
 import OnChainRecords from './components/OnChainRecords'
 import DataVisualization from './components/DataVisualization'
 import BlockchainManagement from './components/BlockchainManagement'
+import PredictionMarket from './components/PredictionMarket'
+import OracleBridge from './components/OracleBridge'
 
 function App() {
   console.log('App component is rendering!')
@@ -27,6 +29,10 @@ function App() {
                 return <DataVisualization />
               case 'blockchain':
                 return <BlockchainManagement />
+              case 'prediction-markets':
+                return <PredictionMarket />
+              case 'oracle-bridge':
+                return <OracleBridge />
               default:
                 return <Dashboard />
             }

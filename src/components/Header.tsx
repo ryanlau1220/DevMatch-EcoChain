@@ -32,6 +32,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'records', label: 'On-Chain Records', icon: FaDatabase },
     { id: 'visualization', label: 'Visualization', icon: FaFileAlt },
     { id: 'blockchain', label: 'Blockchain', icon: FaLink },
+    { id: 'prediction-markets', label: 'Prediction Markets', icon: FaChartBar },
+    { id: 'oracle-bridge', label: 'Oracle Bridge', icon: FaLink },
   ]
 
   const handleNavClick = (tabId: string) => {
