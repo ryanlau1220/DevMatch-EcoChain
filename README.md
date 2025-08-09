@@ -1,5 +1,7 @@
 # EcoChain - Environmental Data Oracle
 
+> **🏆 DevMatch Hackathon 2025 Project**
+
 A comprehensive environmental data oracle and prediction market platform built with hybrid blockchain architecture (Sui + Ethereum). EcoChain provides verifiable environmental monitoring through DePIN (Decentralized Physical Infrastructure) networks, featuring real-time sensor data visualization, blockchain-based sensor management, environmental prediction markets, and AI-powered data analysis.
 
 ## 🚀 Quick Start
@@ -47,9 +49,8 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - **Oasis Protocol (Trust Layer)**: Confidential smart contract execution and ROFL for off-chain computation
 - **Blockchain for Good Alliance**: Addresses UN SDGs 11 and 13
 - **The Graph**: Track 1 - Data accessibility through Subgraph indexing
-- **Ethereum Foundation**: Track 2 - Best App Built Using Scaffold-ETH 2 for rapid Ethereum dapp development
 - **Ethereum Foundation**: Track 3 - Best Tooling for Prediction Markets Built on Ethereum for environmental prediction markets
-- **ChatAndBuild**: AI Agent for natural language querying
+- **ChatAndBuild**: AI-powered application development platform for rapid prototyping and deployment. Used to create the initial EcoChain prototype at [ecochain-verifiable-environmental-1754490041206.chatand.build](https://ecochain-verifiable-environmental-1754490041206.chatand.build)
 
 ## 🏗️ Technology Stack
 
@@ -117,7 +118,7 @@ flowchart TD
     **Sensor NFTs, ownership transfer, trust scores**]
 
     ETHEREUM[⚡ Ethereum Network
-    *Scaffold-ETH 2, Hardhat*
+    *Hardhat, Solidity*
     <u>Prediction markets & oracle bridge</u>
     **Environmental markets, cross-chain data**]
 
@@ -256,11 +257,6 @@ VITE_SUI_PACKAGE_ID=0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc8
 VITE_SUI_REGISTRY_ID=0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e
 VITE_SUI_NETWORK=testnet
 ```
-
-### API Setup
-1. **OpenWeather API**: Get API key from [OpenWeatherMap](https://openweathermap.org/api)
-2. **IQAir API**: Get API key from [IQAir](https://www.iqair.com/air-pollution-data-api)
-3. **Gemini API**: Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ## 📁 Project Structure
 
