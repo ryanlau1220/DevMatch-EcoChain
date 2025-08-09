@@ -1,6 +1,6 @@
 # EcoChain - Environmental Data Oracle
 
-A comprehensive environmental data oracle and prediction market platform built with hybrid blockchain architecture (Sui + Ethereum). EcoChain provides verifiable environmental monitoring through DePIN (Decentralized Physical Infrastructure) networks, featuring real-time sensor data visualization, blockchain-based sensor management, environmental prediction markets, and AI-powered data analysis. The system integrates multiple blockchain technologies to create a complete solution for climate monitoring, data verification, and market-driven environmental insights.
+A comprehensive environmental data oracle and prediction market platform built with hybrid blockchain architecture (Sui + Ethereum). EcoChain provides verifiable environmental monitoring through DePIN (Decentralized Physical Infrastructure) networks, featuring real-time sensor data visualization, blockchain-based sensor management, environmental prediction markets, and AI-powered data analysis.
 
 ## 🚀 Quick Start
 
@@ -16,7 +16,7 @@ A comprehensive environmental data oracle and prediction market platform built w
    ```
 
 3. **Configure environment variables**
-   Create a `.env` file in the root directory:
+   Create a `.env` file in the root directory and copy values from `.env.example`:
    ```env
    VITE_OPENWEATHER_API_KEY=your_openweather_api_key
    VITE_IQAIR_API_KEY=your_iqair_api_key
@@ -25,6 +25,9 @@ A comprehensive environmental data oracle and prediction market platform built w
    VITE_TWITCH_CLIENT_ID=your_twitch_client_id
    VITE_APPLE_CLIENT_ID=your_apple_client_id
    VITE_GEMINI_API_KEY=your_gemini_api_key
+   VITE_SUI_PACKAGE_ID=0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc85d9105
+   VITE_SUI_REGISTRY_ID=0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e
+   VITE_SUI_NETWORK=testnet
    ```
 
 4. **Start development server**
@@ -48,263 +51,147 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - **Ethereum Foundation**: Track 3 - Best Tooling for Prediction Markets Built on Ethereum for environmental prediction markets
 - **ChatAndBuild**: AI Agent for natural language querying
 
-## 🏗️ Architecture
+## 🏗️ Technology Stack
 
-### Frontend Stack
-- **React 18**: Modern React with hooks and functional components
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first CSS framework with glassmorphism design
-- **Vite**: Fast build tool and development server
-- **React Icons**: FontAwesome icon library (ad-blocker friendly)
+### Programming Languages, Frameworks & Libraries
+```mermaid
+---
+config:
+  layout: dagre
+---
+flowchart TD
 
-### Blockchain Integration
-- **Sui SDK**: JavaScript library for Sui blockchain interaction
-- **Sui Testnet**: Live blockchain connection for sensor management
-- **Smart Contracts**: Deployed Move contracts for sensor NFTs
-- **Real-time Data**: Live blockchain status and transaction monitoring
-- **Scaffold-ETH 2**: Modern Ethereum development stack for rapid dapp development
-- **Ethereum Integration**: Hybrid Sui + Ethereum architecture for prediction markets
+    %% Frontend Layer
+    UI[🌐 Frontend Interface
+    *React 18, TypeScript, Tailwind CSS*
+    <u>Multi-page responsive web app</u>
+    **Dashboard, Blockchain Management, Prediction Markets, AI Chat**]
 
-### Authentication & State Management
-- **Sui zkLogin**: Zero-knowledge proof-based authentication
-- **OAuth2 Providers**: Google, Facebook, Twitch, Apple
-- **React Context**: Global state management
-- **Custom Hooks**: useAuth for authentication logic
+    %% Build Tools
+    BUILD[⚡ Build System
+    *Vite, ESLint, PostCSS*
+    <u>Fast development & production builds</u>
+    **Hot reload, TypeScript compilation, CSS processing**]
 
-## 📊 COMPLETED FEATURES
+    %% State Management
+    STATE[🔄 State Management
+    *React Context, Custom Hooks*
+    <u>Global state & authentication</u>
+    **useAuth, useEnvironmentalData**]
 
-### Phase 0: Foundation & Research
-- React + TypeScript setup with modern development practices
-- Vite build system for fast development and production builds
-- Tailwind CSS with glassmorphism UI design
-- Responsive design for mobile and desktop compatibility
+    %% Styling
+    STYLING[🎨 Styling & Icons
+    *Tailwind CSS, React Icons*
+    <u>Utility-first CSS with glassmorphism</u>
+    **Responsive design, modern UI components**]
 
-### Phase 1: Core Infrastructure (MVP)
-- Sui zkLogin authentication with OAuth2 integration
-- Frontend architecture with React Context and custom hooks
-- Comprehensive UI components with navigation system
-- Real-time simulated environmental data generation
-- Interactive data visualization with Recharts library
-- Error boundaries and loading states for robust user experience
-- Icon library management (replaced lucide-react with React Icons)
-- UI/UX improvements with background image fixes and chart color corrections
+    %% Data Visualization
+    CHARTS[📊 Data Visualization
+    *Recharts, Chart.js*
+    <u>Interactive charts & analytics</u>
+    **Real-time data, trend analysis**]
 
-### Phase 2: Frontend & AI Integration
-- Progressive Web App (PWA) structure with React.js and TypeScript
-- Authentication system with Sui zkLogin integration and demo mode
-- Real-time dashboard with data visualization (air quality, temperature, water quality)
-- Enhanced UI components with glassmorphism styling and responsive layout
-- Scaffold-ETH 2 integration for Ethereum development
-- Environmental prediction market implementation
-- Enhanced PWA Features
-  - Virtual sensor management dashboard
-  - Real-time data visualization
-  - Interactive charts (Recharts/Chart.js)
-  - Geographic mapping (Leaflet.js/Mapbox)
-  - Data filtering and search
-- Scaffold-ETH 2 Integration
-  - Ethereum smart contract development
-  - Environmental prediction market contracts
-  - Oracle bridge between Sui and Ethereum
-  - Market creation and management tools
-  - Liquidity pool implementation
-- Data Persistence & User Experience
-  - localStorage integration for data persistence
-  - User-created markets and trading positions saved across sessions
-  - Environmental data submissions preserved
-  - Oracle registrations maintained
-  - Seamless tab switching and page reloads
+    %% Styling
+    classDef frontend fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef build fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef state fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef styling fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef charts fill:#fce4ec,stroke:#880e4f,stroke-width:2px
 
-### Phase 3: Sui Blockchain Integration
-- Sui Smart Contracts for Virtual Sensor Management
-  - Working SimpleSensor NFT contract (builds successfully)
-  - Sensor registration and ownership transfer
-  - Trust score management (0-100)
-  - Status management (active/inactive/suspended)
-  - Event emission for all operations
-  - DEPLOYED TO SUI TESTNET - Package ID: `0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc85d9105`
-  - FRONTEND INTEGRATION - Hybrid solution with blockchain service layer
-  - REAL-TIME BLOCKCHAIN DATA - Live connection to Sui testnet
-  - DEDICATED BLOCKCHAIN MANAGEMENT PAGE - Complete UI for sensor management
-  - INTERACTIVE BLOCKCHAIN FEATURES - Register, transfer, and update trust scores
+    class UI,STATE,STYLING,CHARTS frontend
+    class BUILD build
+```
 
-### Phase 4: Oasis ROFL Integration
-- Oasis ROFL Environmental Oracle Deployment
-  - EnvironmentalOracle.sol smart contract development
-  - Sapphire testnet deployment (Contract: 0x2CA22FCA74ABD51cCD166845a13E2064390605aC)
-  - ROFL application configuration and contract integration
-  - Hardhat deployment setup with environment variables
-  - Oracle authorization and contract management
-  - Network configuration for Sapphire testnet (Chain ID: 23295)
-  - Gas price optimization for Sapphire deployment
-  - ROFL agent development (Rust)
-  - Environmental data structures and validation
-  - Statistical anomaly detection
-  - Cross-sensor validation
-  - Cryptographic proof generation
-  - Smart contract for environmental data (EnvironmentalOracle.sol)
-  - Application architecture with proper logging
-  - Data encoding and blockchain preparation
-  - Continuous operation with 30-second cycles
-  - Self-contained implementation (no external SDK dependencies)
-  - Comprehensive integration guide (INTEGRATION_GUIDE.md)
-  - Real Environmental API Integration
-    - OpenWeatherMap API integration for weather data
-    - IQAir API integration for air quality data
-    - API key management and environment variables
-    - Data validation and error handling
-    - Fallback to mock data when APIs unavailable
-    - Real-time environmental data fetching
-    - Data transformation for blockchain submission
-  - ROFL application configuration (rofl.yaml)
-  - TEE environment setup (TDX)
-  - Build process configuration
+### API Integration, Tracks & Other Tools
+```mermaid
+---
+config:
+  layout: dagre
+---
+flowchart TD
 
-### Phase 5: AI Agent Integration (Web3 Focus - Non-Fungible Agents)
-- AI Agent NFT Smart Contract (Sui)
-  - Unique AI agents as NFTs with different specializations
-  - Agent trading and ownership transfer functionality
-  - Performance tracking and reward distribution
-  - Agent staking mechanism for environmental data analysis
-- AI Agent Chat Interface (React)
-  - Natural language processing for environmental queries
-  - Real-time chat interface with AI agents
-  - Agent marketplace for buying/selling/trading agents
-  - Agent performance dashboard and analytics
-  - Google Gemini API integration with fallback to mock responses
-  - Markdown rendering for formatted AI responses
-  - Chat history persistence with localStorage
-  - Clear chat history functionality
-  - Provider identification (Gemini AI vs Mock Mode)
-  - Quick actions panel for common environmental queries
-  - Context-aware suggestions and follow-up questions
-- Environmental Data AI Agents
-  - Specialized agents for air quality, temperature, water quality analysis
-  - On-chain trading AI agents for prediction markets
-  - Cross-chain data integration (Sui ↔ Ethereum)
-  - Intelligent anomaly detection and alerting
-- AI Agent Intelligence Layer
-  - Natural language query processing (Mock → Real API integration)
-  - Environmental data analysis and insights generation
-  - Prediction market recommendations and trading signals
-  - Real-time environmental monitoring and reporting
-- Web3 Integration Features
-  - NFT-based agent ownership and trading
-  - DeFi integration with prediction markets
-  - Token rewards for accurate predictions and analysis
-  - Decentralized agent governance and upgrades
+    %% Blockchain Integration
+    SUI[🔗 Sui Blockchain
+    *Sui SDK, zkLogin*
+    <u>Smart contracts & NFT management</u>
+    **Sensor NFTs, ownership transfer, trust scores**]
 
-### Phase 6: Real-Time Environmental Data Integration
-- OpenWeather API Integration
-  - Temperature, humidity, and pressure data fetching
-  - Real-time weather data from global locations
-  - API key management and environment variables
-  - Error handling and fallback mechanisms
-- IQAir API Integration
-  - Air quality index (AQI) data
-  - PM2.5 and PM10 particulate matter data
-  - Global air quality monitoring
-  - Real-time air quality updates
-- Environmental Data Service
-  - Hybrid real-time and simulated data system
-  - Automatic fallback to simulated data when APIs unavailable
-  - Data validation and transformation
-  - Hourly data updates to prevent chart jumping
-  - Stable time ranges for consistent visualization
-- Dashboard Optimization
-  - Fixed x-axis jumping issue in charts
-  - Hourly data updates instead of continuous updates
-  - Stable time ranges for air quality (24h), temperature (7d), water quality (12h)
-  - Performance optimizations with useMemo for data arrays
-  - Real-time vs simulated data status indicators
+    ETHEREUM[⚡ Ethereum Network
+    *Scaffold-ETH 2, Hardhat*
+    <u>Prediction markets & oracle bridge</u>
+    **Environmental markets, cross-chain data**]
 
-### Phase 7: The Graph Subgraph Integration
-- Subgraph Development & Deployment
-  - GraphQL schema definition for environmental data entities
-  - AssemblyScript mapping functions for Ethereum events
-  - EnvironmentalOracle.sol contract integration
-  - Subgraph deployment to The Graph Studio
-  - Live endpoint: `https://api.studio.thegraph.com/query/118239/ecochain-environmental-data/v0.0.4`
-- Smart Contract Integration
-  - EnvironmentalOracle.sol deployment to Sepolia testnet
-  - Contract address: `0x2CA22FCA74ABD51cCD166845a13E2064390605aC`
-  - Environmental data submission testing and validation
-  - Event emission and subgraph indexing verification
-- Frontend Integration
-  - BlockchainDataHub.tsx component with real-time data display
-  - Interactive charts using Recharts (temperature, humidity, AQI)
-  - Auto-refresh system with 30-second intervals
-  - Status monitoring and data point tracking
-  - Responsive glassmorphism UI design
-  - Navigation integration in Header.tsx
-- Data Flow
-  - Smart contract events → Subgraph indexing → GraphQL API → React frontend
-  - Real-time environmental data visualization
-  - Live blockchain data without API keys or rate limits
+    %% Oracle & Data
+    ORACLE[🔮 Oracle Infrastructure
+    *Oasis ROFL, The Graph*
+    <u>Data verification & indexing</u>
+    **Environmental data, subgraph queries**]
 
-### Phase 8: Blockchain Data Hub
-- Real-time Subgraph Integration
-  - Live connection to The Graph subgraph
-  - Interactive Data Visualization
-  - Temperature, humidity, and AQI charts using Recharts
-  - Live Blockchain Data
-  - Real-time environmental data from smart contract events
-  - Auto-refresh System
-  - Automatic data updates every 30 seconds
-  - Status Monitoring
-  - Live sync status, data point counts, and sensor tracking
-  - Responsive Design
-  - Glassmorphism UI with mobile-optimized layout
-  - Data Table
-  - Comprehensive view of all environmental records with verification status
+    %% AI Integration
+    AI[🤖 AI Services
+    *Google Gemini API, Mock Mode*
+    <u>Natural language processing</u>
+    **Environmental queries, intelligent responses**]
 
-### Phase 9: Core Application Features
-- Blockchain Management
-  - Dedicated blockchain management page with tabbed interface
-  - Real-time Sui testnet connection and status monitoring
-  - Sensor registry statistics and recent activity tracking
-  - Interactive sensor registration with form validation
-  - Sensor ownership transfer functionality
-  - Trust score management with visual feedback
-  - Smart contract information display with copy-to-clipboard
+    %% Data Sources
+    DATA[📊 Environmental APIs
+    *OpenWeather, IQAir*
+    <u>Real-time environmental data</u>
+    **Weather, air quality, temperature**]
 
-- Environmental Prediction Markets
-  - Complete prediction market creation and management interface
-  - Market trading with YES/NO outcomes and liquidity pools
-  - Real-time probability calculations and market statistics
-  - Interactive trading interface with position tracking
-  - Market details with price history charts and analytics
-  - User position management and portfolio tracking
+    %% Authentication
+    OAUTH[🔐 Authentication
+    *OAuth2 Providers*
+    <u>Multi-provider login system</u>
+    **Google, Facebook, Twitch, Apple**]
 
-- Oracle Bridge
-  - Environmental data submission from Sui sensors to Ethereum
-  - Oracle registration and reputation management
-  - Data verification and validation workflow
-  - Real-time bridge status monitoring between networks
-  - Environmental data visualization and trend analysis
-  - Cross-chain data integrity and trust mechanisms
+    %% Smart Contracts
+    CONTRACTS[📜 Smart Contracts
+    *Move, Solidity*
+    <u>Blockchain logic & automation</u>
+    **Sui NFTs, Ethereum markets, Oracle bridge**]
 
-- Smart Contract Integration
-  - Deployed SimpleSensor NFT contract on Sui testnet
-  - Package ID: `0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc85d9105`
-  - Registry ID: `0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e`
-  - Functions: register_sensor, transfer_sensor, update_trust_score
-  - Event emission for all blockchain operations
+    %% Development Tools
+    DEVTOOLS[🛠️ Development Tools
+    *TypeScript, Node.js, npm*
+    <u>Development environment</u>
+    **Type safety, package management, build tools**]
 
-- Ethereum Smart Contracts
-  - EnvironmentalMarket contract for prediction markets
-  - OracleBridge contract for cross-chain data integration
-  - OpenZeppelin v5 integration with modern security patterns
-  - Hardhat development environment with TypeScript
-  - Deployable to Ethereum testnets and mainnet
+    %% Styling
+    classDef blockchain fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef oracle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef ai fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef data fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef auth fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef contracts fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef tools fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 
-- Data Visualization
-  - Real-time environmental data charts (air quality, temperature, water quality)
-  - Interactive dashboard with statistics and metrics
-  - Sensor distribution visualization
-  - Responsive chart components with loading states
-  - Stable time ranges: Air quality (24h), Temperature (7d), Water quality (12h)
-  - Hourly data updates to prevent chart jumping
+    class SUI,ETHEREUM blockchain
+    class ORACLE oracle
+    class AI ai
+    class DATA data
+    class OAUTH auth
+    class CONTRACTS contracts
+    class DEVTOOLS tools
+```
+
+## ✨ Features
+
+### Core Features
+- **Real-time Environmental Dashboard**: Live monitoring of air quality, temperature, humidity, and water quality with interactive charts
+- **Sui Blockchain Integration**: Virtual sensor management as NFTs with ownership transfer and trust score system
+- **Environmental Prediction Markets**: Create and trade on environmental outcome predictions with real-time pricing
+- **AI Agent Chat**: Natural language interface for environmental data queries with Google Gemini API integration
+- **Cross-chain Oracle Bridge**: Submit environmental data from Sui to Ethereum with verification workflow
+- **Real-time Blockchain Data Hub**: Live environmental data from The Graph subgraph with interactive visualizations
+
+### Advanced Features
+- **Multi-Provider Authentication**: OAuth2 integration with Google, Facebook, Twitch, and Apple
+- **Progressive Web App (PWA)**: Offline-capable web application with responsive design
+- **Glassmorphism UI Design**: Modern glass-like interface with backdrop blur effects
+- **Data Persistence**: Local storage integration for user preferences and session data
+- **Error Boundaries**: Robust error handling with graceful fallbacks
+- **Mobile-First Responsive Design**: Optimized for all device sizes
 
 ## 🎮 How to Use
 
@@ -313,13 +200,12 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Explore interactive charts and visualizations
 - Monitor system status and performance metrics
 - See live vs simulated data status
-- Track hourly data updates
 
-### Blockchain Management
+### Sui Blockchain Management
 1. **Overview Tab**: Check network status, registry stats, and recent activity
 2. **My Sensors Tab**: View all owned sensors with detailed information
-3. **Register Tab**: Add new sensors to the blockchain (demo mode)
-4. **Transfer Tab**: Transfer sensor ownership to other addresses (demo mode)
+3. **Register Tab**: Add new sensors to the blockchain
+4. **Transfer Tab**: Transfer sensor ownership to other addresses
 5. **Trust Scores Tab**: Update sensor trust scores with visual feedback
 
 ### Prediction Markets
@@ -339,26 +225,17 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 2. **Quick Actions**: Use pre-built queries for common environmental topics
 3. **View Responses**: Get beautifully formatted AI responses with markdown
 4. **Follow Suggestions**: Click on AI-generated follow-up questions
-5. **Clear History**: Reset conversations when needed
-6. **Check Provider**: See whether you're using Gemini AI or Mock Mode
 
 ### Blockchain Data Hub
 1. **View Live Data**: See real-time environmental data from blockchain
 2. **Interactive Charts**: Explore temperature, humidity, and AQI trends
 3. **Data Table**: Browse all environmental records with timestamps
 4. **Auto-refresh**: Toggle automatic data updates on/off
-5. **Status Monitoring**: Track sync status and data point counts
-6. **Mobile Optimized**: Responsive design works on all devices
-
-### Navigation
-- Use the header navigation to switch between different sections
-- Each section has a focused purpose and clean interface
-- Mobile-responsive design works on all devices
 
 ## 🔧 Configuration
 
 ### Environment Variables
-Create a `.env` file in the root directory for production OAuth and API integration:
+Create a `.env` file in the root directory and copy values from `.env.example`:
 
 ```env
 # Environmental Data APIs
@@ -384,12 +261,6 @@ VITE_SUI_NETWORK=testnet
 1. **OpenWeather API**: Get API key from [OpenWeatherMap](https://openweathermap.org/api)
 2. **IQAir API**: Get API key from [IQAir](https://www.iqair.com/air-pollution-data-api)
 3. **Gemini API**: Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
-
-### OAuth Setup (Production)
-1. **Google OAuth**: Configure in Google Cloud Console
-2. **Facebook OAuth**: Set up in Facebook Developers
-3. **Twitch OAuth**: Register in Twitch Developers
-4. **Apple OAuth**: Configure in Apple Developer
 
 ## 📁 Project Structure
 
@@ -451,16 +322,6 @@ ethereum/                    # Ethereum smart contracts
 │   └── test-environmental-data.ts # Data submission testing
 ├── hardhat.config.ts        # Hardhat configuration
 └── package.json             # Ethereum dependencies
-
-oasis-rofl/                  # Oasis ROFL Environmental Oracle
-├── src/
-│   └── main.rs             # Environmental oracle application
-├── contracts/
-│   └── EnvironmentalOracle.sol  # Environmental data smart contract
-├── Cargo.toml              # Rust dependencies
-├── rofl.yaml               # ROFL configuration
-├── README.md               # ROFL documentation
-└── INTEGRATION_GUIDE.md    # Oasis SDK integration guide
 ```
 
 ### Development Commands
@@ -488,4 +349,4 @@ npm run deploy       # Deploy to The Graph Studio
 
 ---
 
-**Note**: This is a demonstration project using simulated environmental data with real blockchain integration and real-time environmental API data. The architecture is designed to be production-ready for real sensor integration and can be extended with additional blockchain features.
+**Note**: This project demonstrates a comprehensive environmental data oracle platform with real blockchain integration, AI-powered analysis, and cross-chain data verification. The architecture is designed to be production-ready for real sensor integration and can be extended with additional blockchain features.
