@@ -70,22 +70,113 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - DEDICATED BLOCKCHAIN MANAGEMENT PAGE - Complete UI for sensor management
   - INTERACTIVE BLOCKCHAIN FEATURES - Register, transfer, and update trust scores
 
+### Phase 1: Core Infrastructure (MVP) - Oasis Integration
+- Oasis ROFL Environmental Oracle Deployment
+  - EnvironmentalOracle.sol smart contract development
+  - Sapphire testnet deployment (Contract: 0x2CA22FCA74ABD51cCD166845a13E2064390605aC)
+  - ROFL application configuration and contract integration
+  - Hardhat deployment setup with environment variables
+  - Oracle authorization and contract management
+  - Network configuration for Sapphire testnet (Chain ID: 23295)
+  - Gas price optimization for Sapphire deployment
+  - ROFL agent development (Rust)
+  - Environmental data structures and validation
+  - Statistical anomaly detection
+  - Cross-sensor validation
+  - Cryptographic proof generation
+  - Smart contract for environmental data (EnvironmentalOracle.sol)
+  - Application architecture with proper logging
+  - Data encoding and blockchain preparation
+  - Continuous operation with 30-second cycles
+  - Self-contained implementation (no external SDK dependencies)
+  - Comprehensive integration guide (INTEGRATION_GUIDE.md)
+  - Real Environmental API Integration
+    - OpenWeatherMap API integration for weather data
+    - IQAir API integration for air quality data
+    - API key management and environment variables
+    - Data validation and error handling
+    - Fallback to mock data when APIs unavailable
+    - Real-time environmental data fetching
+    - Data transformation for blockchain submission
+  - ROFL application configuration (rofl.yaml)
+  - TEE environment setup (TDX)
+  - Build process configuration
+
+### Phase 2: AI Agent Integration (Web3 Focus - Non-Fungible Agents)
+- AI Agent NFT Smart Contract (Sui)
+  - Unique AI agents as NFTs with different specializations
+  - Agent trading and ownership transfer functionality
+  - Performance tracking and reward distribution
+  - Agent staking mechanism for environmental data analysis
+- AI Agent Chat Interface (React)
+  - Natural language processing for environmental queries
+  - Real-time chat interface with AI agents
+  - Agent marketplace for buying/selling/trading agents
+  - Agent performance dashboard and analytics
+  - Google Gemini API integration with fallback to mock responses
+  - Markdown rendering for formatted AI responses
+  - Chat history persistence with localStorage
+  - Clear chat history functionality
+  - Provider identification (Gemini AI vs Mock Mode)
+  - Quick actions panel for common environmental queries
+  - Context-aware suggestions and follow-up questions
+- Environmental Data AI Agents
+  - Specialized agents for air quality, temperature, water quality analysis
+  - On-chain trading AI agents for prediction markets
+  - Cross-chain data integration (Sui ↔ Ethereum)
+  - Intelligent anomaly detection and alerting
+- AI Agent Intelligence Layer
+  - Natural language query processing (Mock → Real API integration)
+  - Environmental data analysis and insights generation
+  - Prediction market recommendations and trading signals
+  - Real-time environmental monitoring and reporting
+- Web3 Integration Features
+  - NFT-based agent ownership and trading
+  - DeFi integration with prediction markets
+  - Token rewards for accurate predictions and analysis
+  - Decentralized agent governance and upgrades
+
+### Phase 3: Real-Time Environmental Data Integration
+- OpenWeather API Integration
+  - Temperature, humidity, and pressure data fetching
+  - Real-time weather data from global locations
+  - API key management and environment variables
+  - Error handling and fallback mechanisms
+- IQAir API Integration
+  - Air quality index (AQI) data
+  - PM2.5 and PM10 particulate matter data
+  - Global air quality monitoring
+  - Real-time air quality updates
+- Environmental Data Service
+  - Hybrid real-time and simulated data system
+  - Automatic fallback to simulated data when APIs unavailable
+  - Data validation and transformation
+  - Hourly data updates to prevent chart jumping
+  - Stable time ranges for consistent visualization
+- Dashboard Optimization
+  - Fixed x-axis jumping issue in charts
+  - Hourly data updates instead of continuous updates
+  - Stable time ranges for air quality (24h), temperature (7d), water quality (12h)
+  - Performance optimizations with useMemo for data arrays
+  - Real-time vs simulated data status indicators
+
 ## IN PROGRESS
 
 ### Phase 1: Core Infrastructure (MVP)
 - Oasis ROFL Confidential Verification Module
-  - ROFL agent development (Go/Python)
-  - Statistical anomaly detection
-  - Cross-sensor validation
-  - Cryptographic proof generation
-  - Deploy to Oasis Sapphire Testnet
+  - Deployment to Oasis testnet TEE environment
+    - ROFL application creation on testnet
+    - Account balance verification (150 TEST tokens available)
+    - Transaction fee calculation and gas optimization
+    - TEE environment validation and testing
+    - Production environment deployment
+    - Network connectivity and synchronization
+    - Account state verification and troubleshooting
 
 - Simulated Data Ingestion Pipeline
   - Backend service (Node.js/Python)
   - Realistic environmental data generation
   - Cryptographic signing of data points
-  - Secure data streaming to ROFL
-  - TLS implementation
 
 - The Graph Subgraph for Core Data Indexing
   - GraphQL schema definition
@@ -93,42 +184,6 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - VirtualSensor entity indexing
   - VerifiedReading entity indexing
   - Deploy to The Graph hosted service
-
-
-
-- ChatAndBuild AI Agent Integration (Web3 Focus - Non-Fungible Agents) - COMPLETED
-  - AI Agent NFT Smart Contract (Sui) - COMPLETED
-    - Unique AI agents as NFTs with different specializations
-    - Agent trading and ownership transfer functionality
-    - Performance tracking and reward distribution
-    - Agent staking mechanism for environmental data analysis
-  - AI Agent Chat Interface (React) - COMPLETED
-    - Natural language processing for environmental queries
-    - Real-time chat interface with AI agents
-    - Agent marketplace for buying/selling/trading agents
-    - Agent performance dashboard and analytics
-    - Google Gemini API integration with fallback to mock responses
-    - Markdown rendering for formatted AI responses
-    - Chat history persistence with localStorage
-    - Clear chat history functionality
-    - Provider identification (Gemini AI vs Mock Mode)
-    - Quick actions panel for common environmental queries
-    - Context-aware suggestions and follow-up questions
-  - Environmental Data AI Agents - COMPLETED
-    - Specialized agents for air quality, temperature, water quality analysis
-    - On-chain trading AI agents for prediction markets
-    - Cross-chain data integration (Sui ↔ Ethereum)
-    - Intelligent anomaly detection and alerting
-  - AI Agent Intelligence Layer - COMPLETED
-    - Natural language query processing (Mock → Real API integration)
-    - Environmental data analysis and insights generation
-    - Prediction market recommendations and trading signals
-    - Real-time environmental monitoring and reporting
-  - Web3 Integration Features - COMPLETED
-    - NFT-based agent ownership and trading
-    - DeFi integration with prediction markets
-    - Token rewards for accurate predictions and analysis
-    - Decentralized agent governance and upgrades
 
 ## PENDING FEATURES
 
@@ -164,6 +219,13 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - Time-series forecasting
   - Machine learning integration
   - Spatial correlation analysis
+
+- Location Selection System
+  - Country and region dropdown selector
+  - City search within selected countries
+  - GPS coordinate input
+  - Favorite locations management
+  - Location history tracking
 
 ### Phase 4: Pilot Program & Iteration
 - Partner Onboarding
@@ -209,123 +271,16 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - Treasury management
   - Continuous improvement process
 
-## BUG FIXES & IMPROVEMENTS
-
-### Recently Fixed
-- Duplicate Declaration Error: Renamed AuthProvider type to AuthProviderType
-- Ad Blocker Issues: Added troubleshooting for lucide-react icon blocking
-- Environment Variables: Fixed process.env to import.meta.env for Vite
-- Function Initialization: Reordered handleAuthCallback function definition
-- TypeScript Errors: Fixed all compilation issues
-- Data Persistence: Implemented localStorage for user data persistence across sessions
-- Smart Contract Compilation: Fixed OpenZeppelin v5 compatibility issues
-- Frontend Integration: Resolved variable naming conflicts in PredictionMarket component
-
-### Pending Improvements
-- Accessibility: Add ARIA labels and keyboard navigation
-- Performance: Optimize bundle size and loading times
-- Testing: Add unit tests and integration tests
-- Documentation: Improve code documentation and API docs
-
-## IMMEDIATE NEXT STEPS
-
-### Priority 1 (This Week)
-1. Oasis ROFL Confidential Verification Module
-2. Simulated Data Ingestion Pipeline
-3. The Graph Subgraph for Core Data Indexing
-4. Enhanced Simulated Data Signing
-
-### Priority 2 (Next 2 Weeks) - COMPLETED
-1. Scaffold-ETH 2 Integration: Set up Ethereum development environment
-2. Environmental Prediction Markets: Implement market creation and trading
-3. Oracle Bridge: Connect Sui environmental data to Ethereum markets
-4. Enhanced UI Components: Complete all component functionality
-5. Data Persistence: Implemented localStorage for user data persistence across sessions
-
-### Priority 3 (Next Month)
-1. Oasis ROFL Integration: Develop confidential computation module
-2. AI Agent Integration: Implement Gemini API for natural language queries
-3. Tokenomics Implementation: Deploy token contracts
-4. Advanced Prediction Markets: Implement liquidity pools and AMM functionality
-5. Testing & Documentation: Comprehensive testing and documentation
-
-## PROGRESS TRACKING
-
-### Overall Progress: 75% Complete
-- **Phase 0**: 100% Complete
-- **Phase 1**: 50% In Progress
-- **Phase 2**: 100% Complete
-- **Phase 3**: 0% Pending
-- **Phase 4**: 0% Pending
-- **Phase 5**: 0% Pending
 
 ### Key Milestones
 - MVP Frontend: Complete
 - Smart Contracts: In Progress
 - Backend Services: Not Started
 - AI Integration: Complete
+- Real-Time Data Integration: Complete
 - Tokenomics: Not Started
 - Public Launch: Not Started
 
-## FUTURE ENHANCEMENTS
-
-### AI Agent Chat Advanced Features
-*Note: These enhancements will only be integrated after all proposed features above have been completed.*
-
-#### Multi-Modal Environmental Intelligence
-- **Image Analysis**: Upload photos of environmental conditions for instant AI analysis
-- **Satellite Data Integration**: Real-time satellite imagery analysis for deforestation, urban heat islands, pollution plumes
-- **Document Processing**: Upload environmental reports, compliance documents, research papers for instant summarization
-
-#### Predictive Environmental Modeling
-- **Time-Series Forecasting**: AI predicts future environmental conditions based on data patterns
-- **Scenario Planning**: "What if" analysis for different environmental policies or interventions
-- **Risk Assessment**: Real-time risk scoring for environmental threats in specific locations
-
-#### Voice-Activated Environmental Intelligence
-- **Voice Commands**: "Hey EcoChain, analyze air quality in downtown" or "What's the carbon footprint of this building?"
-- **Real-time Translation**: Environmental data analysis in multiple languages for global deployment
-- **Accessibility**: Voice responses for users with visual impairments
-
-#### Environmental Data Visualization AI
-- **Dynamic Charts**: AI generates custom visualizations based on conversation context
-- **Interactive Maps**: Real-time environmental data overlaid on interactive maps
-- **3D Environmental Models**: AI creates 3D representations of environmental conditions
-
-#### Cross-Chain Data Intelligence
-- **Blockchain Data Analysis**: AI analyzes data from Sui, Ethereum, and other chains for environmental insights
-- **Smart Contract Optimization**: AI suggests improvements to environmental smart contracts
-- **DeFi Environmental Metrics**: Real-time analysis of environmental token performance
-
-#### Environmental Compliance AI
-- **Regulatory Monitoring**: AI tracks environmental regulations and compliance requirements
-- **Audit Trail Analysis**: Automated analysis of environmental compliance documentation
-- **Policy Impact Assessment**: AI evaluates the environmental impact of proposed policies
-
-#### Collaborative Environmental Intelligence
-- **Multi-Agent Conversations**: Multiple specialized AI agents collaborating on complex environmental problems
-- **Expert Network Integration**: Connect with human environmental experts through AI-mediated conversations
-- **Community Intelligence**: AI aggregates insights from multiple users and organizations
-
-#### Environmental Decision Support
-- **Investment Recommendations**: AI suggests environmental investment opportunities based on market data
-- **Resource Optimization**: AI recommends optimal allocation of environmental resources
-- **Emergency Response**: Real-time environmental emergency analysis and response recommendations
-
-#### Personalized Environmental Learning
-- **Adaptive Learning**: AI adapts to user's environmental knowledge level and interests
-- **Educational Content**: AI generates personalized environmental education materials
-- **Skill Assessment**: AI evaluates user's environmental knowledge and suggests learning paths
-
-#### Environmental Market Intelligence
-- **Carbon Credit Trading**: AI provides real-time carbon market analysis and trading recommendations
-- **Environmental Asset Valuation**: AI calculates the value of environmental assets and services
-- **Market Sentiment Analysis**: AI analyzes social media and news for environmental market sentiment
-
-#### Unconventional AI Features
-- **Environmental Gaming AI**: Gamified environmental challenges and virtual tours
-- **Environmental Storytelling AI**: AI generates engaging stories about environmental data
-- **Environmental Social AI**: AI connects users with similar environmental interests and mentors
 
 ## SUCCESS METRICS
 

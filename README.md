@@ -15,12 +15,24 @@ A comprehensive environmental data oracle and prediction market platform built w
    npm install
    ```
 
-3. **Start development server**
+3. **Configure environment variables**
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_OPENWEATHER_API_KEY=your_openweather_api_key
+   VITE_IQAIR_API_KEY=your_iqair_api_key
+   VITE_GOOGLE_CLIENT_ID=your_google_client_id
+   VITE_FACEBOOK_CLIENT_ID=your_facebook_client_id
+   VITE_TWITCH_CLIENT_ID=your_twitch_client_id
+   VITE_APPLE_CLIENT_ID=your_apple_client_id
+   VITE_GEMINI_API_KEY=your_gemini_api_key
+   ```
+
+4. **Start development server**
    ```bash
    npm run dev
    ```
 
-4. **Open your browser**
+5. **Open your browser**
    Navigate to `http://localhost:5173` (or the port shown in terminal)
 
 ## 🎯 Project Overview
@@ -35,6 +47,12 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - **Ethereum Foundation**: Track 2 - Best App Built Using Scaffold-ETH 2 for rapid Ethereum dapp development
 - **Ethereum Foundation**: Track 3 - Best Tooling for Prediction Markets Built on Ethereum for environmental prediction markets
 - **ChatAndBuild**: AI Agent for natural language querying
+
+### Oasis ROFL Integration
+- **Environmental Oracle**: Standalone Rust application for environmental data processing
+- **ROFL Architecture**: Runtime Off-Chain Logic compatible with Oasis Protocol
+- **Smart Contract**: EnvironmentalOracle.sol for blockchain data submission
+- **Self-Contained**: No external SDK dependencies, ready for production deployment
 
 ## 🏗️ Architecture
 
@@ -74,6 +92,14 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Real-time simulated environmental data generation
 - Interactive data visualization with Recharts library
 - Error boundaries and loading states for robust user experience
+
+### Real-Time Environmental Data Integration
+- **OpenWeather API Integration**: Temperature, humidity, and pressure data from global locations
+- **IQAir API Integration**: Real-time air quality index (AQI) and particulate matter data
+- **Hybrid Data System**: Automatic fallback to simulated data when APIs unavailable
+- **Stable Chart Visualization**: Fixed x-axis jumping with hourly data updates
+- **Performance Optimized**: useMemo implementation for smooth chart rendering
+- **Real-time Status Indicators**: Clear indication of live vs simulated data usage
 
 ### Blockchain Management
 - Dedicated blockchain management page with tabbed interface
@@ -133,11 +159,21 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - Hardhat development environment with TypeScript
 - Deployable to Ethereum testnets and mainnet
 
+### Oasis ROFL Environmental Oracle
+- Standalone Rust application for environmental data processing
+- Environmental data structures and validation algorithms
+- Statistical anomaly detection and cross-sensor validation
+- Cryptographic proof generation and blockchain submission
+- Smart contract integration (EnvironmentalOracle.sol)
+- Self-contained architecture ready for Oasis SDK integration
+
 ### Data Visualization
 - Real-time environmental data charts (air quality, temperature, water quality)
 - Interactive dashboard with statistics and metrics
 - Sensor distribution visualization
 - Responsive chart components with loading states
+- Stable time ranges: Air quality (24h), Temperature (7d), Water quality (12h)
+- Hourly data updates to prevent chart jumping
 
 ## 🎮 How to Use
 
@@ -145,6 +181,8 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - View real-time environmental data statistics
 - Explore interactive charts and visualizations
 - Monitor system status and performance metrics
+- See live vs simulated data status
+- Track hourly data updates
 
 ### Blockchain Management
 1. **Overview Tab**: Check network status, registry stats, and recent activity
@@ -181,27 +219,38 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 ## 🔧 Configuration
 
 ### Environment Variables
-The app runs in demo mode by default. For production OAuth and AI integration, create a `.env` file:
+Create a `.env` file in the root directory for production OAuth and API integration:
+
 ```env
+# Environmental Data APIs
+VITE_OPENWEATHER_API_KEY=your_openweather_api_key
+VITE_IQAIR_API_KEY=your_iqair_api_key
+
+# OAuth Configuration
 VITE_GOOGLE_CLIENT_ID=your_google_client_id
 VITE_FACEBOOK_CLIENT_ID=your_facebook_client_id
 VITE_TWITCH_CLIENT_ID=your_twitch_client_id
 VITE_APPLE_CLIENT_ID=your_apple_client_id
+
+# AI Integration
 VITE_GEMINI_API_KEY=your_gemini_api_key
+
+# Sui Blockchain Configuration
+VITE_SUI_PACKAGE_ID=0x5bbfeb3847bbea0aad7383da8a6ed826c36a031586858ea8287159cfc85d9105
+VITE_SUI_REGISTRY_ID=0xa69b46162707233562a70c0565f74513a7a1bf73f54f745d007d6bd0d108a15e
+VITE_SUI_NETWORK=testnet
 ```
+
+### API Setup
+1. **OpenWeather API**: Get API key from [OpenWeatherMap](https://openweathermap.org/api)
+2. **IQAir API**: Get API key from [IQAir](https://www.iqair.com/air-pollution-data-api)
+3. **Gemini API**: Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ### OAuth Setup (Production)
 1. **Google OAuth**: Configure in Google Cloud Console
 2. **Facebook OAuth**: Set up in Facebook Developers
 3. **Twitch OAuth**: Register in Twitch Developers
 4. **Apple OAuth**: Configure in Apple Developer
-
-### AI Integration Setup
-1. **Get Gemini API Key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. **Add to Environment**: Set `VITE_GEMINI_API_KEY=your_api_key` in `.env`
-3. **Restart Server**: Restart the development server to load the API key
-4. **Verify Integration**: Check the AI Agent Chat for "Gemini AI" status badge
-5. **Fallback Mode**: App automatically uses mock responses if API key is missing
 
 ## 📁 Project Structure
 
@@ -224,11 +273,13 @@ src/
 │   └── LoadingSpinner.tsx   # Loading states and skeletons
 ├── services/                # Service layer
 │   ├── blockchain.ts        # Sui blockchain integration
-│   └── aiService.ts         # Google Gemini AI integration
+│   ├── aiService.ts         # Google Gemini AI integration
+│   └── environmentalDataService.ts # Real-time environmental data
+├── hooks/                   # Custom React hooks
+│   ├── useAuth.tsx         # Authentication hook
+│   └── useEnvironmentalData.ts # Environmental data management
 ├── config/                  # Configuration files
 │   └── auth.ts             # Authentication configuration
-├── hooks/                   # Custom React hooks
-│   └── useAuth.tsx         # Authentication hook
 ├── types/                   # TypeScript type definitions
 │   └── auth.ts             # Authentication types
 ├── App.tsx                  # Main application component
@@ -249,6 +300,16 @@ ethereum/                    # Ethereum smart contracts
 │   └── deploy.ts           # Deployment script
 ├── hardhat.config.ts       # Hardhat configuration
 └── package.json            # Ethereum dependencies
+
+oasis-rofl/                  # Oasis ROFL Environmental Oracle
+├── src/
+│   └── main.rs             # Environmental oracle application
+├── contracts/
+│   └── EnvironmentalOracle.sol  # Environmental data smart contract
+├── Cargo.toml              # Rust dependencies
+├── rofl.yaml               # ROFL configuration
+├── README.md               # ROFL documentation
+└── INTEGRATION_GUIDE.md    # Oasis SDK integration guide
 ```
 
 ### Development Commands
@@ -266,7 +327,9 @@ npm run lint         # Run ESLint
 - **The Graph** for decentralized indexing infrastructure
 - **ChatAndBuild** for AI integration framework
 - **Blockchain for Good Alliance** for mission alignment with UN SDGs
+- **OpenWeather** for global weather data APIs
+- **IQAir** for air quality monitoring data
 
 ---
 
-**Note**: This is a demonstration project using simulated environmental data with real blockchain integration. The architecture is designed to be production-ready for real sensor integration and can be extended with additional blockchain features.
+**Note**: This is a demonstration project using simulated environmental data with real blockchain integration and real-time environmental API data. The architecture is designed to be production-ready for real sensor integration and can be extended with additional blockchain features.

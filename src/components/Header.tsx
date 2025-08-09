@@ -10,7 +10,8 @@ import {
   FaBars, 
   FaTimes,
   FaLink,
-  FaRobot
+  FaRobot,
+  FaGlobe
 } from 'react-icons/fa'
 import { useAuth } from '../hooks/useAuth'
 import LoginModal from './LoginModal'
@@ -27,15 +28,20 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: FaChartBar },
-    { id: 'generation', label: 'Data Generation', icon: FaBolt },
-    { id: 'verification', label: 'Verification', icon: FaShieldAlt },
-    { id: 'records', label: 'On-Chain Records', icon: FaDatabase },
-    { id: 'visualization', label: 'Visualization', icon: FaFileAlt },
-    { id: 'blockchain', label: 'Blockchain', icon: FaLink },
-    { id: 'prediction-markets', label: 'Prediction Markets', icon: FaChartBar },
-    { id: 'oracle-bridge', label: 'Oracle Bridge', icon: FaLink },
-    { id: 'ai-agent-chat', label: 'AI Agent Chat', icon: FaRobot },
+    // Main Navigation Items (6 buttons max)
+    { id: 'dashboard', label: 'Dashboard', icon: FaChartBar, type: 'single' },
+    { id: 'blockchain', label: 'Sui Chain', icon: FaLink, type: 'single' },
+    { id: 'data-platform', label: 'Data Platform', icon: FaBolt, type: 'dropdown', items: [
+      { id: 'generation', label: 'Data Generation', icon: FaBolt },
+      { id: 'verification', label: 'Oasis Verification', icon: FaShieldAlt },
+      { id: 'records', label: 'On-Chain Records', icon: FaDatabase },
+      { id: 'visualization', label: 'Analytics', icon: FaFileAlt },
+    ]},
+    { id: 'markets', label: 'Markets', icon: FaChartBar, type: 'dropdown', items: [
+      { id: 'prediction-markets', label: 'Prediction Markets', icon: FaChartBar },
+      { id: 'oracle-bridge', label: 'Oracle Bridge', icon: FaGlobe },
+    ]},
+    { id: 'ai-agent-chat', label: 'AI Agent Chat', icon: FaRobot, type: 'single' }
   ]
 
   const handleNavClick = (tabId: string) => {
@@ -63,23 +69,136 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1 flex-1 justify-center max-w-2xl mx-4">
+            <nav className="hidden lg:flex items-center space-x-2 flex-1 justify-center max-w-4xl mx-4">
               {navItems.map((item) => {
                 const Icon = item.icon
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${
-                      activeTab === item.id
-                        ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
-                        : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="font-medium whitespace-nowrap">{item.label}</span>
-                  </button>
-                )
+                
+                if (item.type === 'single') {
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 text-sm ${
+                        activeTab === item.id
+                          ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                          : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span className="font-medium whitespace-nowrap">{item.label}</span>
+                    </button>
+                  )
+                }
+                
+                if (item.type === 'dropdown') {
+                  return (
+                    <div key={item.id} className="relative group">
+                      <button className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 text-sm ${
+                        activeTab === item.id || item.items?.some(subItem => activeTab === subItem.id)
+                          ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                          : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                      }`}>
+                        <Icon className="h-4 w-4" />
+                        <span className="font-medium whitespace-nowrap">{item.label}</span>
+                        <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {/* Dropdown Menu */}
+                      <div className="absolute top-full left-0 mt-1 w-48 bg-white/95 backdrop-blur-md border border-white/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div className="py-2">
+                          {item.items?.map((subItem) => {
+                            const SubIcon = subItem.icon
+                            return (
+                              <button
+                                key={subItem.id}
+                                onClick={() => setActiveTab(subItem.id)}
+                                className={`w-full flex items-center space-x-3 px-4 py-2 text-sm transition-all duration-200 ${
+                                  activeTab === subItem.id
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                                }`}
+                              >
+                                <SubIcon className="h-4 w-4" />
+                                <span className="font-medium">{subItem.label}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                
+                return null
+              })}
+            </nav>
+
+            {/* Tablet Navigation - Compact version with dropdowns */}
+            <nav className="hidden md:flex lg:hidden items-center space-x-1 flex-1 justify-center max-w-3xl mx-4">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                
+                if (item.type === 'single') {
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 text-xs ${
+                        activeTab === item.id
+                          ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                          : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                      }`}
+                    >
+                      <Icon className="h-3 w-3" />
+                      <span className="font-medium whitespace-nowrap">{item.label}</span>
+                    </button>
+                  )
+                }
+                
+                if (item.type === 'dropdown') {
+                  return (
+                    <div key={item.id} className="relative group">
+                      <button className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 text-xs ${
+                        activeTab === item.id || item.items?.some(subItem => activeTab === subItem.id)
+                          ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                          : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                      }`}>
+                        <Icon className="h-3 w-3" />
+                        <span className="font-medium whitespace-nowrap">{item.label}</span>
+                        <svg className="w-2 h-2 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {/* Dropdown Menu */}
+                      <div className="absolute top-full left-0 mt-1 w-40 bg-white/95 backdrop-blur-md border border-white/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div className="py-2">
+                          {item.items?.map((subItem) => {
+                            const SubIcon = subItem.icon
+                            return (
+                              <button
+                                key={subItem.id}
+                                onClick={() => setActiveTab(subItem.id)}
+                                className={`w-full flex items-center space-x-3 px-3 py-2 text-xs transition-all duration-200 ${
+                                  activeTab === subItem.id
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                                }`}
+                              >
+                                <SubIcon className="h-3 w-3" />
+                                <span className="font-medium">{subItem.label}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                
+                return null
               })}
             </nav>
 
@@ -106,7 +225,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-200"
+                className="md:hidden p-2 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-200"
               >
                 {isMobileMenuOpen ? (
                   <FaTimes className="h-5 w-5 text-gray-700" />
@@ -119,24 +238,58 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
           {/* Mobile Navigation Menu */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden border-t border-white/20 py-4">
+            <div className="md:hidden border-t border-white/20 py-4">
               <nav className="space-y-2">
                 {navItems.map((item) => {
                   const Icon = item.icon
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleNavClick(item.id)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                        activeTab === item.id
-                          ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
-                          : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
-                      }`}
-                    >
-                      <Icon className="h-5 w-5" />
-                      <span className="font-medium">{item.label}</span>
-                    </button>
-                  )
+                  
+                  if (item.type === 'single') {
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => handleNavClick(item.id)}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                          activeTab === item.id
+                            ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                            : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                        }`}
+                      >
+                        <Icon className="h-5 w-5" />
+                        <span className="font-medium">{item.label}</span>
+                      </button>
+                    )
+                  }
+                  
+                  if (item.type === 'dropdown') {
+                    return (
+                      <div key={item.id}>
+                        <div className="px-4 py-2">
+                          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{item.label}</h3>
+                        </div>
+                        <div className="space-y-1">
+                          {item.items?.map((subItem) => {
+                            const SubIcon = subItem.icon
+                            return (
+                              <button
+                                key={subItem.id}
+                                onClick={() => handleNavClick(subItem.id)}
+                                className={`w-full flex items-center space-x-3 px-8 py-3 rounded-lg transition-all duration-200 ${
+                                  activeTab === subItem.id
+                                    ? 'bg-white/20 text-gray-800 shadow-lg backdrop-blur-sm border border-white/30'
+                                    : 'text-gray-600 hover:bg-white/10 hover:text-gray-800'
+                                }`}
+                              >
+                                <SubIcon className="h-5 w-5" />
+                                <span className="font-medium">{subItem.label}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )
+                  }
+                  
+                  return null
                 })}
               </nav>
               

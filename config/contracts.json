@@ -1,0 +1,20 @@
+{
+  "networks": {
+    "hardhat": {
+      "environmental_oracle": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "chain_id": 31337,
+      "name": "Hardhat Local"
+    },
+    "sepolia": {
+      "environmental_oracle": "",
+      "chain_id": 11155111,
+      "name": "Sepolia Testnet"
+    },
+    "sapphire_testnet": {
+      "environmental_oracle": "0x2CA22FCA74ABD51cCD166845a13E2064390605aC",
+      "chain_id": 23295,
+      "name": "Sapphire Testnet"
+    }
+  },
+  "current_network": "sapphire_testnet"
+}

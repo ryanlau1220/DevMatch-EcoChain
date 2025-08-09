@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { 
   FaChartLine, 
   FaDatabase, 
@@ -12,7 +12,9 @@ import {
   FaTint,
   FaWind,
   FaMapMarkerAlt,
-  FaClock
+  FaClock,
+  FaCloudSun,
+  FaExclamationTriangle
 } from 'react-icons/fa'
 
 import { 
@@ -33,6 +35,7 @@ import {
   Cell
 } from 'recharts'
 import { LoadingSpinner, SkeletonCard, SkeletonChart } from './LoadingSpinner'
+import { useEnvironmentalData } from '../hooks/useEnvironmentalData'
 
 const Dashboard: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -40,15 +43,25 @@ const Dashboard: React.FC = () => {
   const [temperatureData, setTemperatureData] = useState<any[]>([])
   const [waterQualityData, setWaterQualityData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [lastDataUpdate, setLastDataUpdate] = useState<Date>(new Date())
+  const [nextUpdateTime, setNextUpdateTime] = useState<Date>(new Date())
+  
+  const {
+    realTimeData,
+    lastUpdate
+  } = useEnvironmentalData()
 
-  // Generate real-time simulated data
-  const generateSimulatedData = () => {
+  // Generate stable simulated data with fixed time ranges
+  // This prevents x-axis jumping by using consistent time intervals
+  // Data is generated once and only the latest values are updated
+  const generateStableSimulatedData = () => {
     const now = new Date()
-    const baseTime = now.getTime()
+    // Round down to the nearest hour for stable time ranges
+    const baseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0, 0)
     
-    // Generate air quality data (last 24 hours)
+    // Generate air quality data (last 24 hours, fixed hourly intervals)
     const airQuality = Array.from({ length: 24 }, (_, i) => {
-      const time = new Date(baseTime - (23 - i) * 60 * 60 * 1000)
+      const time = new Date(baseTime.getTime() - (23 - i) * 60 * 60 * 1000)
       return {
         time: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         aqi: Math.floor(Math.random() * 50) + 20, // 20-70 AQI
@@ -58,20 +71,20 @@ const Dashboard: React.FC = () => {
       }
     })
 
-    // Generate temperature data (last 7 days)
+    // Generate temperature data (last 7 days, fixed daily intervals)
     const temperature = Array.from({ length: 7 }, (_, i) => {
-      const date = new Date(baseTime - (6 - i) * 24 * 60 * 60 * 1000)
+      const date = new Date(baseTime.getFullYear(), baseTime.getMonth(), baseTime.getDate() - (6 - i), 0, 0, 0, 0)
       return {
         date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        temp: Math.floor(Math.random() * 20) + 10, // 10-30°C (wider range)
-        humidity: Math.floor(Math.random() * 40) + 30, // 30-70% (lower range)
+        temp: Math.floor(Math.random() * 20) + 10, // 10-30°C
+        humidity: Math.floor(Math.random() * 40) + 30, // 30-70%
         timestamp: date.getTime()
       }
     })
 
-    // Generate water quality data (last 12 hours)
+    // Generate water quality data (last 12 hours, fixed 2-hour intervals)
     const waterQuality = Array.from({ length: 12 }, (_, i) => {
-      const time = new Date(baseTime - (11 - i) * 2 * 60 * 60 * 1000)
+      const time = new Date(baseTime.getTime() - (11 - i) * 2 * 60 * 60 * 1000)
       return {
         time: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         ph: (Math.random() * 2 + 6.5).toFixed(1), // 6.5-8.5 pH
@@ -84,26 +97,119 @@ const Dashboard: React.FC = () => {
     setAirQualityData(airQuality)
     setTemperatureData(temperature)
     setWaterQualityData(waterQuality)
+    setLastDataUpdate(now)
   }
 
-  // Update data every 30 seconds
+  // Update only the most recent data point (simulates real-time updates)
+  const updateLatestDataPoint = () => {
+    if (airQualityData.length > 0 && temperatureData.length > 0 && waterQualityData.length > 0) {
+      // Update only the latest air quality data point
+      const updatedAirQuality = [...airQualityData]
+      const latestIndex = updatedAirQuality.length - 1
+      updatedAirQuality[latestIndex] = {
+        ...updatedAirQuality[latestIndex],
+        aqi: Math.floor(Math.random() * 50) + 20,
+        pm25: Math.floor(Math.random() * 15) + 5,
+        no2: Math.floor(Math.random() * 30) + 10
+      }
+      setAirQualityData(updatedAirQuality)
+
+      // Update only the latest temperature data point
+      const updatedTemperature = [...temperatureData]
+      const latestTempIndex = updatedTemperature.length - 1
+      updatedTemperature[latestTempIndex] = {
+        ...updatedTemperature[latestTempIndex],
+        temp: Math.floor(Math.random() * 20) + 10,
+        humidity: Math.floor(Math.random() * 40) + 30
+      }
+      setTemperatureData(updatedTemperature)
+
+      // Update only the latest water quality data point
+      const updatedWaterQuality = [...waterQualityData]
+      const latestWaterIndex = updatedWaterQuality.length - 1
+      updatedWaterQuality[latestWaterIndex] = {
+        ...updatedWaterQuality[latestWaterIndex],
+        ph: (Math.random() * 2 + 6.5).toFixed(1),
+        turbidity: Math.floor(Math.random() * 10) + 2,
+        dissolvedOxygen: (Math.random() * 3 + 6).toFixed(1)
+      }
+      setWaterQualityData(updatedWaterQuality)
+    }
+  }
+
+  // Update data every hour instead of every 30 seconds to prevent x-axis jumping
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true)
-      // Simulate loading delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      generateSimulatedData()
-      setIsLoading(false)
+      
+      try {
+        // Always try to get real data first
+        if (realTimeData) {
+          // Real data is available, use it
+          setIsLoading(false)
+        } else {
+          // No real data available, fall back to simulated data
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          generateStableSimulatedData()
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.warn('Falling back to simulated data:', error)
+        generateStableSimulatedData()
+        setIsLoading(false)
+      }
     }
 
     loadData()
-    const interval = setInterval(() => {
-      setCurrentTime(new Date())
-      generateSimulatedData()
-    }, 30000)
+    
+    // Set up hourly updates for simulated data
+    const scheduleHourlyUpdate = () => {
+      const now = new Date()
+      const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0, 0)
+      const timeUntilNextHour = nextHour.getTime() - now.getTime()
+      
+      // Set the next update time for display
+      setNextUpdateTime(nextHour)
+      
+      // Schedule the next update
+      const hourlyTimer = setTimeout(() => {
+        if (!realTimeData) {
+          // Update simulated data every hour
+          updateLatestDataPoint()
+          setLastDataUpdate(new Date())
+          console.log('📊 Chart data updated hourly')
+        }
+        // Schedule the next update
+        scheduleHourlyUpdate()
+      }, timeUntilNextHour)
+      
+      return hourlyTimer
+    }
+    
+    const hourlyTimer = scheduleHourlyUpdate()
+    
+    return () => clearTimeout(hourlyTimer)
+  }, [realTimeData])
 
-    return () => clearInterval(interval)
-  }, [])
+  // Update current time only when needed (not every second)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date()
+      // Only update if the minute has changed (less frequent updates)
+      if (now.getMinutes() !== currentTime.getMinutes()) {
+        setCurrentTime(now)
+      }
+    }, 60000) // Check every minute instead of every second
+
+    return () => clearInterval(timer)
+  }, [currentTime])
+
+  // Generate initial simulated data if no real data available
+  useEffect(() => {
+    if (!realTimeData) {
+      generateStableSimulatedData()
+    }
+  }, [realTimeData])
 
   // Calculate current statistics
   const currentStats = {
@@ -113,59 +219,62 @@ const Dashboard: React.FC = () => {
     activeSensors: 156
   }
 
-  // Recent data points
-  const recentData = [
-    {
-      id: 1,
-      type: 'Air Quality',
-      location: 'New York, NY',
-      value: `${airQualityData[airQualityData.length - 1]?.aqi || 42} AQI`,
-      status: 'verified',
-      timestamp: '2 min ago',
-      icon: FaThermometerHalf,
-      color: 'from-blue-400 to-blue-600'
-    },
-    {
-      id: 2,
-      type: 'Water Quality',
-      location: 'San Francisco, CA',
-      value: `${waterQualityData[waterQualityData.length - 1]?.ph || 7.2} pH`,
-      status: 'verified',
-      timestamp: '5 min ago',
-      icon: FaTint,
-      color: 'from-cyan-400 to-cyan-600'
-    },
-    {
-      id: 3,
-      type: 'Temperature',
-      location: 'Austin, TX',
-      value: `${temperatureData[temperatureData.length - 1]?.temp || 18.5}°C`,
-      status: 'pending',
-      timestamp: '8 min ago',
-      icon: FaThermometerHalf,
-      color: 'from-orange-400 to-orange-600'
-    },
-    {
-      id: 4,
-      type: 'Wind Speed',
-      location: 'Miami, FL',
-      value: `${Math.floor(Math.random() * 20) + 5} km/h`,
-      status: 'verified',
-      timestamp: '12 min ago',
-      icon: FaWind,
-      color: 'from-green-400 to-green-600'
-    }
-  ]
+  // Recent data points - optimized with useMemo to prevent unnecessary re-renders
+  const recentData = useMemo(() => {
+    const data = [
+      {
+        id: 1,
+        type: 'Air Quality',
+        location: realTimeData ? `${realTimeData.location.city}, ${realTimeData.location.country}` : 'New York, NY',
+        value: realTimeData ? `${realTimeData.airQuality.aqi} AQI` : `${airQualityData[airQualityData.length - 1]?.aqi || 42} AQI`,
+        status: 'verified',
+        timestamp: '2 min ago',
+        icon: FaThermometerHalf,
+        color: 'from-blue-400 to-blue-600'
+      },
+      {
+        id: 2,
+        type: 'Water Quality',
+        location: realTimeData ? `${realTimeData.location.city}, ${realTimeData.location.country}` : 'Los Angeles, CA',
+        value: `${waterQualityData[waterQualityData.length - 1]?.ph || 7.2} pH`,
+        status: 'verified',
+        timestamp: '5 min ago',
+        icon: FaTint,
+        color: 'from-cyan-400 to-cyan-600'
+      },
+      {
+        id: 3,
+        type: 'Temperature',
+        location: realTimeData ? `${realTimeData.location.city}, ${realTimeData.location.country}` : 'Austin, TX',
+        value: realTimeData ? `${realTimeData.temperature.toFixed(1)}°C` : `${temperatureData[airQualityData.length - 1]?.temp || 18.5}°C`,
+        status: 'verified',
+        timestamp: '2 min ago',
+        icon: FaThermometerHalf,
+        color: 'from-orange-400 to-orange-600'
+      },
+      {
+        id: 4,
+        type: 'Humidity',
+        location: realTimeData ? `${realTimeData.location.city}, ${realTimeData.location.country}` : 'Miami, FL',
+        value: realTimeData ? `${realTimeData.humidity.toFixed(1)}%` : `${Math.floor(Math.random() * 20) + 5}%`,
+        status: 'verified',
+        timestamp: '2 min ago',
+        icon: FaTint,
+        color: 'from-green-400 to-green-600'
+      }
+    ]
+    return data
+  }, [realTimeData, airQualityData, temperatureData, waterQualityData])
 
   // Sensor distribution data for pie chart
-  const sensorDistribution = [
+  const sensorDistribution = useMemo(() => [
     { name: 'Air Quality', value: 45, color: '#3B82F6' },
     { name: 'Water Quality', value: 30, color: '#06B6D4' },
     { name: 'Temperature', value: 15, color: '#F59E0B' },
     { name: 'Wind Speed', value: 10, color: '#10B981' }
-  ]
+  ], [])
 
-  const stats = [
+  const stats = useMemo(() => [
     { 
       label: 'Data Points Collected', 
       value: currentStats.dataPoints.toLocaleString(), 
@@ -194,7 +303,7 @@ const Dashboard: React.FC = () => {
       color: 'from-orange-400 to-orange-600',
       change: '+3.1%'
     },
-  ]
+  ], [currentStats.dataPoints, currentStats.verifiedRecords, currentStats.onChainTransactions, currentStats.activeSensors])
 
   return (
     <div className="space-y-8">
@@ -209,10 +318,23 @@ const Dashboard: React.FC = () => {
                 <FaClock className="h-4 w-4" />
                 <span>Last updated: {currentTime.toLocaleTimeString()}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <FaGlobe className="h-4 w-4" />
-                <span>Global Network Active</span>
-              </div>
+              {realTimeData ? (
+                <div className="flex items-center space-x-2">
+                  <FaCloudSun className="h-4 w-4 text-green-500" />
+                  <span className="text-green-600">Live data from OpenWeather + IQAir</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <FaDatabase className="h-4 w-4 text-blue-500" />
+                  <span className="text-blue-600">Using simulated data</span>
+                </div>
+              )}
+              {!realTimeData && (
+                <div className="flex items-center space-x-2">
+                  <FaClock className="h-4 w-4 text-gray-400" />
+                  <span className="text-gray-500">Data updates hourly</span>
+                </div>
+              )}
             </div>
           </div>
           <div className="hidden md:block">
@@ -224,6 +346,73 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Real-time Environmental Data Display */}
+      {realTimeData && (
+        <div className="backdrop-blur-md bg-green-500/10 rounded-2xl p-6 border border-green-500/20 shadow-xl">
+          <div className="flex items-center gap-3 mb-4">
+            <FaCloudSun className="text-green-500 text-xl" />
+            <h3 className="text-xl font-semibold text-green-800">Live Environmental Data</h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600">{realTimeData.temperature.toFixed(1)}°C</div>
+              <div className="text-sm text-gray-600">Temperature</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600">{realTimeData.humidity.toFixed(1)}%</div>
+              <div className="text-sm text-gray-600">Humidity</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600">{realTimeData.airQuality.aqi}</div>
+              <div className="text-sm text-gray-600">Air Quality Index</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-600">{realTimeData.airQuality.pm25.toFixed(1)}</div>
+              <div className="text-sm text-gray-600">PM2.5 (μg/m³)</div>
+            </div>
+          </div>
+          <div className="mt-4 text-center text-sm text-gray-500">
+            📍 Location: {realTimeData.location.city}, {realTimeData.location.country} | 
+            🔍 Sensor ID: {realTimeData.sensorId} | 
+            ⏰ Last Update: {new Date(realTimeData.timestamp).toLocaleTimeString()}
+          </div>
+        </div>
+      )}
+
+      {/* Simulated Data Status Display */}
+      {!realTimeData && (
+        <div className="backdrop-blur-md bg-blue-500/10 rounded-2xl p-6 border border-blue-500/20 shadow-xl">
+          <div className="flex items-center gap-3 mb-4">
+            <FaDatabase className="text-blue-500 text-xl" />
+            <h3 className="text-xl font-semibold text-blue-800">Simulated Environmental Data</h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600">{temperatureData[0]?.temp || 22}°C</div>
+              <div className="text-sm text-gray-600">Temperature</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-cyan-600">{temperatureData[0]?.humidity || 65}%</div>
+              <div className="text-sm text-gray-600">Humidity</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600">{airQualityData[0]?.aqi || 45}</div>
+              <div className="text-sm text-gray-600">Air Quality Index</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-600">{airQualityData[0]?.pm25 || 12.5}</div>
+              <div className="text-sm text-gray-600">PM2.5 (μg/m³)</div>
+            </div>
+          </div>
+          <div className="mt-4 text-center text-sm text-gray-500">
+            🔄 Data updates hourly | 
+            ⏰ Last Update: {lastDataUpdate.toLocaleTimeString()} | 
+            ⏳ Next Update: {nextUpdateTime.toLocaleTimeString()} | 
+            📊 Using simulated data for demonstration
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

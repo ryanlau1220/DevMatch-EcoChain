@@ -16,30 +16,30 @@ function App() {
   console.log('App component is rendering!')
   const [activeTab, setActiveTab] = useState('dashboard')
 
-            const renderContent = () => {
-            switch (activeTab) {
-              case 'dashboard':
-                return <Dashboard />
-              case 'generation':
-                return <DataGeneration />
-              case 'verification':
-                return <Verification />
-              case 'records':
-                return <OnChainRecords />
-              case 'visualization':
-                return <DataVisualization />
-              case 'blockchain':
-                return <BlockchainManagement />
-              case 'prediction-markets':
-                return <PredictionMarket />
-              case 'oracle-bridge':
-                return <OracleBridge />
-              case 'ai-agent-chat':
-                return <AIAgentChat />
-              default:
-                return <Dashboard />
-            }
-          }
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard />
+      case 'generation':
+        return <DataGeneration />
+      case 'verification':
+        return <Verification />
+      case 'records':
+        return <OnChainRecords />
+      case 'visualization':
+        return <DataVisualization />
+      case 'blockchain':
+        return <BlockchainManagement />
+      case 'prediction-markets':
+        return <PredictionMarket />
+      case 'oracle-bridge':
+        return <OracleBridge />
+      case 'ai-agent-chat':
+        return <AIAgentChat />
+      default:
+        return <Dashboard />
+    }
+  }
 
   return (
     <ErrorBoundary>
