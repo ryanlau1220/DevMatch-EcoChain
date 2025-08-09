@@ -1,0 +1,89 @@
+# EcoChain Environmental Data Subgraph Schema
+# Integrated with The Graph Token API for enhanced token metadata
+
+type EnvironmentalData @entity(immutable: false) {
+  id: ID!
+  sensorId: String!
+  timestamp: BigInt!
+  temperature: BigInt!
+  humidity: BigInt!
+  airQuality: BigInt!
+  pressure: BigInt!
+  location: String!
+  verified: Boolean!
+  verificationTimestamp: BigInt
+  tokenMetadata: TokenMetadata  # Token API integration for prediction market tokens
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type VirtualSensor @entity(immutable: false) {
+  id: ID!
+  sensorAddress: String!
+  sensorType: String!
+  location: String!
+  registrationTimestamp: BigInt!
+  isActive: Boolean!
+  totalReadings: BigInt!
+  tokenMetadata: TokenMetadata  # Token API integration for sensor tokens
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type VerifiedReading @entity(immutable: false) {
+  id: ID!
+  readingId: String!
+  verificationTimestamp: BigInt!
+  verifierAddress: String!
+  verificationMethod: String!
+  tokenMetadata: TokenMetadata  # Token API integration for verification tokens
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+# Token API Integration Entity
+# This entity demonstrates usage of The Graph Token API
+# to fetch token metadata (symbol, name, decimals, price)
+# Fallback to published Subgraph for token metadata if Token API not applicable
+type TokenMetadata @entity(immutable: false) {
+  id: ID!
+  tokenAddress: String!
+  symbol: String!
+  name: String!
+  decimals: Int!
+  price: BigDecimal
+  priceSource: String!  # "Token API" or "Fallback Subgraph"
+  lastUpdated: BigInt!
+  # Environmental context for this token
+  environmentalContext: String  # e.g., "Air Quality Token", "Temperature Prediction Token"
+  marketCap: BigDecimal
+  volume24h: BigDecimal
+  # Token API specific fields
+  tokenApiVersion: String
+  fallbackSubgraph: String  # URL of fallback subgraph if used
+}
+
+# Aggregate statistics for analytics
+type EnvironmentalStats @entity(immutable: false) {
+  id: ID!
+  totalReadings: BigInt!
+  totalSensors: BigInt!
+  averageTemperature: BigDecimal
+  averageAirQuality: BigDecimal
+  totalVerifiedReadings: BigInt!
+  lastUpdated: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+# Token API Integration Statistics
+type TokenApiStats @entity(immutable: false) {
+  id: ID!
+  totalTokenApiCalls: BigInt!
+  totalFallbackCalls: BigInt!
+  successRate: BigDecimal
+  lastTokenApiCall: BigInt
+  lastFallbackCall: BigInt
+  createdAt: BigInt!
+  updatedAt: BigInt!
+} 

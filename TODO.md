@@ -52,7 +52,7 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - Liquidity pool implementation
 - Data Persistence & User Experience
   - localStorage integration for data persistence
-  - User-created markets and positions saved across sessions
+  - User-created markets and trading positions saved across sessions
   - Environmental data submissions preserved
   - Oracle registrations maintained
   - Seamless tab switching and page reloads
@@ -160,127 +160,53 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
   - Performance optimizations with useMemo for data arrays
   - Real-time vs simulated data status indicators
 
+### Phase 4: The Graph Subgraph Integration
+- **Subgraph Development & Deployment**
+  - GraphQL schema definition for environmental data entities
+  - AssemblyScript mapping functions for Ethereum events
+  - EnvironmentalOracle.sol contract integration
+  - Subgraph deployment to The Graph Studio
+  - Live endpoint: `https://api.studio.thegraph.com/query/118239/ecochain-environmental-data/v0.0.4`
+- **Smart Contract Integration**
+  - EnvironmentalOracle.sol deployment to Sepolia testnet
+  - Contract address: `0x2CA22FCA74ABD51cCD166845a13E2064390605aC`
+  - Environmental data submission testing and validation
+  - Event emission and subgraph indexing verification
+- **Frontend Integration**
+  - BlockchainDataHub.tsx component with real-time data display
+  - Interactive charts using Recharts (temperature, humidity, AQI)
+  - Auto-refresh system with 30-second intervals
+  - Status monitoring and data point tracking
+  - Responsive glassmorphism UI design
+  - Navigation integration in Header.tsx
+- **Data Flow**
+  - Smart contract events → Subgraph indexing → GraphQL API → React frontend
+  - Real-time environmental data visualization
+  - Live blockchain data without API keys or rate limits
+
 ## IN PROGRESS
 
-### Phase 1: Core Infrastructure (MVP)
-- Oasis ROFL Confidential Verification Module
-  - Deployment to Oasis testnet TEE environment
-    - ROFL application creation on testnet
-    - Account balance verification (150 TEST tokens available)
-    - Transaction fee calculation and gas optimization
-    - TEE environment validation and testing
-    - Production environment deployment
-    - Network connectivity and synchronization
-    - Account state verification and troubleshooting
+### Phase 5: Enhanced Ethereum Prediction Markets
+- Deploy EnvironmentalMarket contract to Sepolia testnet
+- Deploy OracleBridge contract to Sepolia testnet
+- Implement advanced market features (liquidity pools, market resolution)
+- Add cross-chain data feeds (Sui → Ethereum)
+- Market analytics and insights dashboard
+- Advanced trading interface with position management
+- Market creation and management tools
+- Oracle integration with environmental data
+- Market resolution and dispute handling
 
-- Simulated Data Ingestion Pipeline
-  - Backend service (Node.js/Python)
-  - Realistic environmental data generation
-  - Cryptographic signing of data points
-
-- The Graph Subgraph for Core Data Indexing
-  - GraphQL schema definition
-  - AssemblyScript mapping functions
-  - VirtualSensor entity indexing
-  - VerifiedReading entity indexing
-  - Deploy to The Graph hosted service
-
-## PENDING FEATURES
-
-### Phase 3: Advanced Features & Tokenomics
-- Enhanced Simulated Data Signing
-  - Robust cryptographic signing (ECDSA)
-  - Unique private key management
-  - Public key registration on Sui
-  - Digital signature verification in ROFL
-
-- Reputation System for Virtual Sensors
-  - Dynamic trust score management
-  - Anomaly detection integration
-  - Slashing logic for malicious sensors
-  - $ECOCHAIN staking mechanism
-
-- Dual-Tokenomics Implementation
-  - $ECOCHAIN governance/staking token
-  - Data Credit stable token
-  - Staking contracts
-  - Buyback and burn mechanism
-  - Liquidity pool management
-
-- Environmental Prediction Markets
-  - Market creation and management tools
-  - Trading interface with liquidity pools
-  - Oracle integration with environmental data
-  - Market resolution and dispute handling
-  - Advanced market analytics and insights
-
-- Refined ROFL Verification Logic
-  - Advanced statistical models
-  - Time-series forecasting
-  - Machine learning integration
-  - Spatial correlation analysis
-
-- Location Selection System
-  - Country and region dropdown selector
-  - City search within selected countries
-  - GPS coordinate input
-  - Favorite locations management
-  - Location history tracking
-
-### Phase 4: Pilot Program & Iteration
-- Partner Onboarding
-  - Local council collaboration
-  - University partnership
-  - PWA onboarding process
-  - Simulated data integration
-
-- Performance Monitoring
-  - Data transmission metrics
-  - ROFL processing performance
-  - Sui transaction monitoring
-  - Subgraph indexing efficiency
-
-- Feedback Collection & Iteration
-  - User feedback system
-  - UX improvements
-  - Data utility optimization
-  - Verification proof clarity
-
-### Phase 5: Public Launch & Scaling
-- Public Network Launch
-  - Sui Mainnet deployment
-  - Oasis Sapphire Mainnet deployment
-  - Public announcement
-  - Documentation updates
-
-- Open Participation
-  - Virtual sensor certification
-  - Decentralized sensor registration
-  - Reward distribution system
-  - Community governance
-
-- Data Market Launch
-  - Data credit marketplace
-  - NGO and researcher access
-  - Government body integration
-  - Monetization model activation
-
-- Community Governance
-  - On-chain governance framework
-  - $ECOCHAIN holder voting
-  - Treasury management
-  - Continuous improvement process
-
+## COMPLETED MILESTONES
 
 ### Key Milestones
 - MVP Frontend: Complete
-- Smart Contracts: In Progress
-- Backend Services: Not Started
+- Smart Contracts: Complete
 - AI Integration: Complete
 - Real-Time Data Integration: Complete
-- Tokenomics: Not Started
-- Public Launch: Not Started
-
+- Oasis ROFL Integration: Complete
+- Blockchain Data Hub Frontend: 
+- Enhanced Prediction Markets: In Progress
 
 ## SUCCESS METRICS
 
@@ -290,6 +216,8 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - System uptime and reliability
 - User authentication success rate
 - API response times
+- Subgraph indexing efficiency 
+- Cross-chain data flow performance
 
 ### User Metrics
 - User registration and retention
@@ -297,10 +225,13 @@ EcoChain is a decentralized physical infrastructure (DePIN) network for verifiab
 - User satisfaction scores
 - Support ticket volume
 - Community engagement
+- Prediction market participation
+- Data query usage 
 
 ### Business Metrics
 - Virtual sensor registration
 - Data transaction volume
-- Token circulation and utility
+- Market creation and trading volume
+- Oracle participation rates
 - Partnership agreements
-- Revenue generation
+- Revenue generation potential

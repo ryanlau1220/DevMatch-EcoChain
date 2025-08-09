@@ -62,7 +62,7 @@ class EnvironmentalDataService {
       this.openWeatherApiKey = envOpenWeatherKey || localStorage.getItem('OPENWEATHER_API_KEY');
       this.iqAirApiKey = envIqAirKey || localStorage.getItem('IQAIR_API_KEY');
       
-      if (!this.openWeatherApiKey || !this.iqAirKey) {
+      if (!this.openWeatherApiKey || !this.iqAirApiKey) {
         console.warn('API keys not found. Please set VITE_OPENWEATHER_API_KEY and VITE_IQAIR_API_KEY in your .env file or in localStorage.');
       } else {
         console.log('✅ Environmental API keys loaded successfully');

@@ -11,6 +11,7 @@ import BlockchainManagement from './components/BlockchainManagement'
 import PredictionMarket from './components/PredictionMarket'
 import OracleBridge from './components/OracleBridge'
 import AIAgentChat from './components/AIAgentChat'
+import BlockchainDataHub from './components/BlockchainDataHub'
 
 function App() {
   console.log('App component is rendering!')
@@ -36,6 +37,8 @@ function App() {
         return <OracleBridge />
       case 'ai-agent-chat':
         return <AIAgentChat />
+      case 'blockchain-data-hub':
+        return <BlockchainDataHub />
       default:
         return <Dashboard />
     }

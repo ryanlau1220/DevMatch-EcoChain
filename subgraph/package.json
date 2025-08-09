@@ -1,0 +1,34 @@
+{
+  "name": "ecochain-subgraph",
+  "version": "1.0.0",
+  "description": "EcoChain Environmental Data Subgraph with Token API Integration",
+  "main": "index.js",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/",
+    "deploy:hosted": "graph deploy --product hosted-service ecochain/ecochain-environmental",
+    "create:local": "graph create ecochain/ecochain-environmental --node http://localhost:8020",
+    "remove:local": "graph remove ecochain/ecochain-environmental --node http://localhost:8020",
+    "deploy:local": "graph deploy ecochain/ecochain-environmental --ipfs http://localhost:5001 --node http://localhost:8020",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "subgraph",
+    "thegraph",
+    "ecochain",
+    "environmental",
+    "token-api",
+    "blockchain",
+    "ethereum"
+  ],
+  "author": "EcoChain Team",
+  "license": "MIT",
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.60.0",
+    "@graphprotocol/graph-ts": "^0.31.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
